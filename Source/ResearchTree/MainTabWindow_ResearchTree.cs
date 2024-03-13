@@ -307,11 +307,10 @@ public class MainTabWindow_ResearchTree : MainTabWindow
                      .Where(result => result.match > 0)
                      .OrderBy(result => result.match))
         {
-            list.Add(new FloatMenuOption(result2.node.Label, delegate { CenterOn(result2.node); },
+            list.Add(new FloatMenuOption(result2.node.Label, delegate { },
                 MenuOptionPriority.Default, delegate
                 {
                     CenterOn(result2.node);
-                    UI.UnfocusCurrentControl();
                 }));
         }
 
