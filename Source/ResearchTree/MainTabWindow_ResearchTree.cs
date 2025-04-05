@@ -384,6 +384,11 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         return _quickSearchWidget.filter.Active;
     }
 
+    public bool IsQuickSearchWidgetEmpty()
+    {
+        return string.IsNullOrEmpty(_quickSearchWidget.filter.Text);
+    }
+
     private void UpdateSearchResults(Rect searchRect = default)
     {
         _quickSearchWidget.noResultsMatched = false;
@@ -412,11 +417,14 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         {
             list.Add(new FloatMenuOption(
                 node.Label,
-                delegate { CenterOn(node); },
-                MenuOptionPriority.Default,
                 delegate
                 {
                     _quickSearchWidget.filter.Text = node.Label;
+                    CenterOn(node);
+                },
+                MenuOptionPriority.Default,
+                delegate
+                {
                     somethingHighlighted = false;
                     _matchingProjects.Clear();
                     _matchingProjects.Add(node.Research);
@@ -429,7 +437,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
                 continue;
             }
 
-            CenterOn(node);
+            //CenterOn(node);
             somethingHighlighted = false;
         }
 

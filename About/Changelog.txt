@@ -1,5 +1,10 @@
 # Changelog for ResearchTree
 
+1.5.29 - Searchbar should no longer focus projects until a result is selected
+Hovering over the queue with a selected search-term will not focus on the queued researchin the tree
+Searchbar text will not be replaced by search-result until clicked on
+
+
 1.5.28 - Fixed the background loading. Probably fixed the empty tree issue. Fixed loading save issue.
 
 

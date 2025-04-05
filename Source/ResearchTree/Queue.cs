@@ -481,7 +481,8 @@ public class Queue : WorldComponent
             );
             node.QueueRect = rect;
             node.DrawAt(min, rect, true);
-            if (interactable && Mouse.IsOver(rect) && _draggedNode == null)
+            if (interactable && Mouse.IsOver(rect) && _draggedNode == null &&
+                MainTabWindow_ResearchTree.Instance.IsQuickSearchWidgetEmpty())
             {
                 MainTabWindow_ResearchTree.Instance.CenterOn(node);
             }

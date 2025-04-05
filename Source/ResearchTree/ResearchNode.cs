@@ -331,6 +331,11 @@ public class ResearchNode : Node
         var detailedMode = forceDetailedMode ||
                            MainTabWindow_ResearchTree.Instance.ZoomLevel < Constants.DetailedModeZoomLevelCutoff;
         var mouseOver = Mouse.IsOver(Rect) || Rect.Contains(Event.current.mousePosition);
+        if (MainTabWindow_ResearchTree.Instance.IsQuickSearchWidgetActive())
+        {
+            mouseOver = false;
+        }
+
         if (Event.current.type == EventType.Repaint)
         {
             // researches that are completed or could be started immediately, and that have the required building(s) available
@@ -455,7 +460,7 @@ public class ResearchNode : Node
             Queue.DrawOrderLabel(visibleRect, this);
         }
 
-        if (!Widgets.ButtonInvisible(Rect))
+        if (!mouseOver || !Widgets.ButtonInvisible(Rect))
         {
             return;
         }
