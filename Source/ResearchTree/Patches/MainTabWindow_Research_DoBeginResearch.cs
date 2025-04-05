@@ -12,19 +12,6 @@ public class MainTabWindow_Research_DoBeginResearch
 {
     private static void Prefix(ResearchProjectDef projectToStart)
     {
-        if (projectToStart.IsAnomalyResearch())
-        {
-            return;
-        }
-
-        var researchNode = projectToStart.ResearchNode();
-        var researchNodes = researchNode.GetMissingRequired();
-        // check is same order
-        if (Queue.IsEnqueueRangeFirstSameOrder(researchNodes, false, false))
-        {
-            return;
-        }
-
-        Queue.EnqueueFirst(researchNodes);
+        Queue.EnqueueFirst(projectToStart);
     }
 }

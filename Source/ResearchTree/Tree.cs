@@ -123,12 +123,13 @@ public static class Tree
 
             MainTabWindow_ResearchTree.Instance.ViewRectInnerDirty = true;
             MainTabWindow_ResearchTree.Instance.ViewRectDirty = true;
+            MainTabWindow_ResearchTree.Instance.TreeRectDirty = true;
         }
 
         if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
         {
-            LongEventHandler.QueueLongEvent(Initialize, "ResearchPal.BuildingResearchTreeAsync", true,
-                null);
+            LongEventHandler.QueueLongEvent(Initialize, "ResearchPal.BuildingResearchTreeAsync",
+                true, null);
         }
     }
 
@@ -200,6 +201,7 @@ public static class Tree
             "Fluffy.ResearchTree.RestoreQueue", false, null);
     }
 
+    // Initialize step eight
     private static void RemoveEmptyRows()
     {
         var y = 1;
@@ -219,6 +221,7 @@ public static class Tree
         }
     }
 
+    // Initialize step seven
     private static void MinimizeEdgeLength()
     {
         var edgeLengthSweepLocal = false;
@@ -434,6 +437,7 @@ public static class Tree
         }
     }
 
+    // Initialize step three
     private static void HorizontalPositions()
     {
         var relevantTechLevels = RelevantTechLevels;
@@ -478,6 +482,7 @@ public static class Tree
         }
     }
 
+    // Initialize step four
     private static void NormalizeEdges()
     {
         foreach (var item3 in new List<Edge<Node, Node>>(Edges.Where(e => e.Span > 1)))
@@ -509,6 +514,7 @@ public static class Tree
         }
     }
 
+    // Initialize step two
     private static void CreateEdges()
     {
         if (_edges.NullOrEmpty())
@@ -539,7 +545,8 @@ public static class Tree
         }
     }
 
-    public static void CheckPrerequisites()
+    // Initialize step one
+    private static void CheckPrerequisites()
     {
         var keepIterating = true;
         var iterator = 10;
@@ -637,7 +644,7 @@ public static class Tree
     {
         // filter Anomaly DLC research
         var allDefsListForReading =
-            DefDatabase<ResearchProjectDef>.AllDefsListForReading.Where(def => def.knowledgeCategory == null);
+            DefDatabase<ResearchProjectDef>.AllDefsListForReading.Where(def => !def.IsHidden);
         // find hidden nodes (nodes that have themselves as a prerequisite)
         var hidden = allDefsListForReading.Where(p => p.prerequisites?.Contains(p) ?? false);
         // find locked nodes (nodes that have a hidden node as a prerequisite)
@@ -653,8 +660,10 @@ public static class Tree
             ResearchToNodesCache[def] = researchNode;
             iterator++;
         }
+        Queue.RefreshQueuedNode();
     }
 
+    // Initialize step five
     private static void Collapse()
     {
         _ = Size;
@@ -748,6 +757,7 @@ public static class Tree
         return Enumerable.FirstOrDefault(Nodes, n => n.X == X && n.Y == Y);
     }
 
+    // Initialize step six
     public static void MinimizeCrossings()
     {
         for (var i = 1; i <= Size.x; i++)

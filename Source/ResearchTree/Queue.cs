@@ -29,34 +29,47 @@ public class Queue : WorldComponent
     public static ResearchNode _draggedNode;
 
     private readonly List<ResearchNode> _queue = [];
+    
+    private Dictionary<KnowledgeCategoryDef, List<ResearchNode>> _anomalyQueue;
 
     private List<ResearchProjectDef> _saveableQueue;
 
     public Queue(World world) : base(world)
     {
         _instance = this;
+        EnsureAnomalyQueueInitialized();
     }
 
-    public static ResearchNode Pop
+    // TODO: Determine the timing of this method invocation
+    private void EnsureAnomalyQueueInitialized()
     {
-        get
+        if (!ModsConfig.AnomalyActive)
         {
-            if (_instance._queue is not { Count: > 0 })
+            return;
+        }
+        if (_anomalyQueue == null)
+        {
+            _anomalyQueue = [];
+            foreach (var knowledgeCategoryDef in DefDatabase<KnowledgeCategoryDef>.AllDefs)
             {
-                return null;
+                _anomalyQueue.Add(knowledgeCategoryDef, []);
             }
-
-            var result = _instance._queue[0];
-            _instance._queue.RemoveAt(0);
-            return result;
+        }
+        else
+        {
+            foreach (var knowledgeCategoryDef in _anomalyQueue.Keys)
+            {
+                _anomalyQueue[knowledgeCategoryDef].RemoveAll(x => !x.Research.IsAnomalyResearch());
+            }
         }
     }
 
-    public static int NumQueued => _instance._queue.Count;
+    private static int NumQueued => _instance._queue.Count + _instance._anomalyQueue.Values.Sum(anomalyQueue => anomalyQueue.Count);
 
     public static void TryDequeue(ResearchNode node)
     {
-        if (_instance._queue.Contains(node))
+        if (_instance._queue.Contains(node) || 
+            _instance._anomalyQueue.Values.Any(anomalyQueue => anomalyQueue.Contains(node)))
         {
             Dequeue(node);
         }
@@ -64,34 +77,53 @@ public class Queue : WorldComponent
 
     private static void Dequeue(ResearchNode node)
     {
+        if (node.Research.IsAnomalyResearch())
+        {
+            Dequeue(node, _instance._anomalyQueue.Values.SelectMany(anomalyQueue => anomalyQueue).ToList());
+            return;
+        }
+        Dequeue(node, _instance._queue);
+    }
+
+    private static void Dequeue(ResearchNode node, List<ResearchNode> researchNodeQueue)
+    {
         var removeFirst = false;
-        var indexOf = _instance._queue.IndexOf(node);
+        var indexOf = researchNodeQueue.IndexOf(node);
         if (indexOf >= 0)
         {
-            _instance._queue.RemoveAt(indexOf);
+            researchNodeQueue.RemoveAt(indexOf);
             removeFirst = indexOf == 0;
         }
 
         node.QueueRect = Rect.zero;
-        foreach (var item in _instance._queue.Where(n => n.GetMissingRequiredRecursive().Contains(node)).ToList())
+        foreach (var item in researchNodeQueue.Where(n => n.GetMissingRequiredRecursive().Contains(node)).ToList())
         {
-            indexOf = _instance._queue.IndexOf(item);
+            indexOf = researchNodeQueue.IndexOf(item);
             if (indexOf < 0)
             {
                 continue;
             }
 
             item.QueueRect = Rect.zero;
-            _instance._queue.RemoveAt(indexOf);
+            researchNodeQueue.RemoveAt(indexOf);
             if (!removeFirst && indexOf == 0)
             {
                 removeFirst = true;
             }
         }
 
-        if (Find.ResearchManager.currentProj == node.Research)
+        if (Find.ResearchManager.IsCurrentProject(node.Research))
         {
-            Find.ResearchManager.currentProj = null;
+            Find.ResearchManager.StopProject(node.Research);
+        }
+
+        if (node.Research.IsAnomalyResearch())
+        {
+            foreach (var knowledgeCategoryDef in _instance._anomalyQueue.Keys)
+            {
+                _instance._anomalyQueue[knowledgeCategoryDef].Clear();
+            }
+            researchNodeQueue.Do(x => Enqueue(x, false));
         }
 
         // try to remove duplicate confirmation window
@@ -103,22 +135,25 @@ public class Queue : WorldComponent
         }
     }
 
-    private static void Enqueue(ResearchNode node, bool add)
+    private static void Enqueue(ResearchNode node, bool add = true)
     {
         if (node.Research.IsAnomalyResearch())
         {
+            Enqueue(node, _instance._anomalyQueue[node.Research.knowledgeCategory]);
             return;
         }
-
+        Enqueue(node, _instance._queue, add);
+    }
+    private static void Enqueue(ResearchNode node, List<ResearchNode> researchNodeQueue, bool add = true)
+    {
         if (!add)
         {
-            _instance._queue.Clear();
-            Find.ResearchManager.currentProj = null;
+            researchNodeQueue.Clear();
         }
 
-        if (!_instance._queue.Contains(node))
+        if (!researchNodeQueue.Contains(node))
         {
-            _instance._queue.Add(node);
+            researchNodeQueue.Add(node);
         }
     }
 
@@ -126,41 +161,49 @@ public class Queue : WorldComponent
     {
         if (node.Research.IsAnomalyResearch())
         {
+            ReEnqueue(node, _instance._anomalyQueue[node.Research.knowledgeCategory]);
             return;
         }
-
-        if (!_instance._queue.Contains(node))
+        ReEnqueue(node, _instance._queue);
+    }
+    private static void ReEnqueue(ResearchNode node, List<ResearchNode> researchNodeQueue)
+    {
+        if (!researchNodeQueue.Contains(node))
         {
-            _instance._queue.Insert(0, node);
+            researchNodeQueue.Insert(0, node);
             return;
         }
 
-        var index = _instance._queue.IndexOf(node);
+        var index = researchNodeQueue.IndexOf(node);
         for (var i = index; i > 0; i--)
         {
-            _instance._queue[i] = _instance._queue[i - 1];
+            researchNodeQueue[i] = researchNodeQueue[i - 1];
         }
 
-        _instance._queue[0] = node;
+        researchNodeQueue[0] = node;
     }
 
     public static void EnqueueRangeFirst(IEnumerable<ResearchNode> nodes)
     {
-        var researchOrder = nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent).ToList();
+        var researchNodes = nodes.ToList();
+        var researchOrder = SortResearchNodes(researchNodes).ToList();
 
         if (IsEnqueueRangeFirstSameOrder(researchOrder))
         {
             return;
         }
 
-        var current = _instance._queue.FirstOrDefault();
+        var first = researchNodes.First();
+        
         researchOrder.Reverse();
+        
         foreach (var item in researchOrder)
         {
             ReEnqueue(item);
         }
 
-        if (current != _instance._queue.FirstOrDefault())
+        if (Find.ResearchManager.GetProject(first.Research.knowledgeCategory) == null ||
+            !Find.ResearchManager.IsCurrentProject(first.Research))
         {
             AttemptBeginResearch();
         }
@@ -168,26 +211,14 @@ public class Queue : WorldComponent
         UpdateNodeQueueRect();
     }
 
-    public static void EnqueueFirst(IEnumerable<ResearchNode> nodes)
+    public static void EnqueueFirst(ResearchNode node)
     {
-        var researchOrder = nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent).ToList();
-
-        if (IsEnqueueRangeFirstSameOrder(researchOrder))
-        {
-            return;
-        }
-
-        researchOrder.Reverse();
-        foreach (var item in researchOrder)
-        {
-            ReEnqueue(item);
-        }
-
-        FocusStartedProject(researchOrder.LastOrDefault()?.Research);
+        ReEnqueue(node);
+        FocusStartedProject(node.Research);
         UpdateNodeQueueRect();
     }
 
-    public static bool IsEnqueueRangeFirstSameOrder(IEnumerable<ResearchNode> nodes,
+    private static bool IsEnqueueRangeFirstSameOrder(IEnumerable<ResearchNode> nodes,
         bool nodesOrdered = true, bool warning = true)
     {
         if (nodes == null)
@@ -195,16 +226,19 @@ public class Queue : WorldComponent
             return false;
         }
 
-        var researchOrder = !nodesOrdered
-            ? nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent).ToList()
-            : nodes.ToList();
+        var researchNodes = nodes.ToList();
+        var researchOrder = nodesOrdered ? researchNodes.ToList() : SortResearchNodes(researchNodes).ToList();
 
-        if (researchOrder.Count > _instance._queue.Count)
+        var first = researchNodes.First();
+        var queue = first.Research.IsAnomalyResearch() ? _instance._anomalyQueue[first.Research.knowledgeCategory] : 
+            _instance._queue;
+
+        if (researchOrder.Count > queue.Count)
         {
             return false;
         }
 
-        var sameOrder = !researchOrder.Where((t, i) => t != _instance._queue[i]).Any();
+        var sameOrder = !researchOrder.Where((t, i) => t != queue[i]).Any();
 
         if (!sameOrder)
         {
@@ -220,18 +254,25 @@ public class Queue : WorldComponent
         return true;
     }
 
+    private static IEnumerable<ResearchNode> SortResearchNodes(IEnumerable<ResearchNode> nodes)
+    {
+        return Tree.Initialized ? nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent) :
+            nodes.OrderBy(node => node.Research.ResearchViewX).ThenBy(node => node.Research.ResearchViewY);
+    }
+
     public static void EnqueueRange(IEnumerable<ResearchNode> nodes, bool add)
     {
         if (!add)
         {
+            // The vanilla research will not be executed
             _instance._queue.Clear();
             Find.ResearchManager.currentProj = null;
         }
 
-        var firstEnqueue = _instance._queue.Empty();
-        foreach (var item in nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent))
+        var firstEnqueue = _instance._queue.Empty() || _instance._anomalyQueue.Values.Any(anomalyQueue => anomalyQueue.Empty());
+        foreach (var item in SortResearchNodes(nodes))
         {
-            Enqueue(item, true);
+            Enqueue(item);
         }
 
         if (firstEnqueue)
@@ -244,7 +285,7 @@ public class Queue : WorldComponent
 
     public static bool IsQueued(ResearchNode node)
     {
-        return _instance._queue.Contains(node) && !node.Research.IsAnomalyResearch();
+        return _instance._queue.Contains(node) || _instance._anomalyQueue.Values.Any(anomalyQueue => anomalyQueue.Contains(node));
     }
 
     public static void TryStartNext(ResearchProjectDef finished)
@@ -256,7 +297,8 @@ public class Queue : WorldComponent
         }
 
         TryDequeue(finished.ResearchNode());
-        var current = _instance._queue.FirstOrDefault();
+        var current = finished.IsAnomalyResearch() ? 
+            _instance._anomalyQueue[finished.knowledgeCategory].FirstOrDefault() : _instance._queue.FirstOrDefault();
         AttemptBeginResearch();
         AttemptDoCompletionLetter(finished, current?.Research);
     }
@@ -270,16 +312,18 @@ public class Queue : WorldComponent
 
         string text = "ResearchFinished".Translate(current.LabelCap);
         string text2 = current.LabelCap + "\n\n" + current.description;
+        LetterDef letter;
         if (next != null)
         {
             text2 += "\n\n" + "Fluffy.ResearchTree.NextInQueue".Translate(next.LabelCap);
-            Find.LetterStack.ReceiveLetter(text, text2, LetterDefOf.PositiveEvent);
+            letter = LetterDefOf.PositiveEvent;
         }
         else
         {
             text2 += "\n\n" + "Fluffy.ResearchTree.NextInQueue".Translate("Fluffy.ResearchTree.None".Translate());
-            Find.LetterStack.ReceiveLetter(text, text2, LetterDefOf.NeutralEvent);
+            letter = LetterDefOf.NeutralEvent;
         }
+        Find.LetterStack.ReceiveLetter(text, text2, letter);
     }
 
     public override void ExposeData()
@@ -287,7 +331,7 @@ public class Queue : WorldComponent
         base.ExposeData();
         if (Scribe.mode == LoadSaveMode.Saving)
         {
-            _saveableQueue = _queue.Select(node => node.Research).ToList();
+            _saveableQueue = _queue.Concat(_anomalyQueue.Values.SelectMany(q => q)).Select(node => node.Research).ToList();
         }
 
         Scribe_Collections.Look(ref _saveableQueue, "Queue", LookMode.Def);
@@ -299,28 +343,31 @@ public class Queue : WorldComponent
         foreach (var researchNode in _saveableQueue.Select(item => item.ResearchNode())
                      .Where(researchNode => researchNode != null))
         {
-            Enqueue(researchNode, true);
+            Enqueue(researchNode);
         }
     }
 
-    public static void DrawLabels(Rect visibleRect)
+    public static void DrawOrderLabel(Rect visibleRect, ResearchNode node)
     {
-        var num = 1;
-        foreach (var item in _instance._queue)
-        {
-            var rect = new Rect(item.Rect.xMax - (Constants.QueueLabelSize / 2f),
-                item.Rect.yMin + ((item.Rect.height - Constants.QueueLabelSize) / 2f),
-                Constants.QueueLabelSize,
-                Constants.QueueLabelSize);
-            if (item.IsVisible(visibleRect))
-            {
-                var color = Assets.ColorCompleted[item.Research.techLevel];
-                var background = num > 1 ? Assets.ColorUnavailable[item.Research.techLevel] : color;
-                DrawLabel(rect, color, background, num.ToString());
-            }
+        DrawLabels(visibleRect, node,
+            node.Research.IsAnomalyResearch() ? _instance._anomalyQueue[node.Research.knowledgeCategory] : _instance._queue);
+    }
 
-            num++;
+    private static void DrawLabels(Rect visibleRect, ResearchNode node, List<ResearchNode> queue)
+    {
+        var index = queue.IndexOf(node);
+        if (!node.IsVisible(visibleRect) || index < 0)
+        {
+            return;
         }
+        var rect = new Rect(node.Rect.xMax - (Constants.QueueLabelSize / 2f),
+            node.Rect.yMin + ((node.Rect.height - Constants.QueueLabelSize) / 2f),
+            Constants.QueueLabelSize,
+            Constants.QueueLabelSize);
+        var color = Assets.ColorCompleted[node.Research.techLevel];
+        var num = index + 1;
+        var background = num > 1 ? Assets.ColorUnavailable[node.Research.techLevel] : color;
+        DrawLabel(rect, color, background, num.ToString());
     }
 
     public static void DrawLabelForMainButton(Rect rect)
@@ -349,7 +396,7 @@ public class Queue : WorldComponent
 
     public static void DrawLabelForVanillaWindow(Rect rect, ResearchProjectDef projectToStart)
     {
-        if (projectToStart.IsAnomalyResearch())
+        if (projectToStart.IsHidden)
         {
             return;
         }
@@ -360,6 +407,9 @@ public class Queue : WorldComponent
             return;
         }
 
+        var indexOf = researchNode.Research.IsAnomalyResearch() ? 
+            _instance._anomalyQueue[projectToStart.knowledgeCategory].IndexOf(researchNode) : _instance._queue.IndexOf(researchNode);
+
         DrawLabel(
             new Rect(
                 rect.xMax - 10f,
@@ -367,7 +417,7 @@ public class Queue : WorldComponent
                 Constants.SmallQueueLabelSize,
                 Constants.SmallQueueLabelSize),
             Color.white,
-            Color.grey, _instance._queue.IndexOf(researchNode) + 1 + "");
+            Color.grey, indexOf + 1 + "");
     }
 
     private static void DrawLabel(Rect canvas, Color main, Color background, string label)
@@ -393,7 +443,7 @@ public class Queue : WorldComponent
         Text.Anchor = TextAnchor.UpperLeft;
     }
 
-    public static void DrawQueue(Rect canvas, bool interactible)
+    public static void DrawQueue(Rect canvas, bool interactable)
     {
         if (!_instance._queue.Any())
         {
@@ -431,7 +481,7 @@ public class Queue : WorldComponent
             );
             node.QueueRect = rect;
             node.DrawAt(min, rect, true);
-            if (interactible && Mouse.IsOver(rect) && _draggedNode == null)
+            if (interactable && Mouse.IsOver(rect) && _draggedNode == null)
             {
                 MainTabWindow_ResearchTree.Instance.CenterOn(node);
             }
@@ -455,31 +505,48 @@ public class Queue : WorldComponent
         DoFinishResearchProject(node.Research);
     }
 
-    public static void RefreshQueue()
+    public static void RefreshQueuedNode()
     {
-        if (Find.ResearchManager.currentProj == null)
+        for (var i = 0; i < _instance._queue.Count; i++)
         {
-            return;
+            if (Tree.ResearchToNodesCache.TryGetValue(_instance._queue[i].Research, out var newNode))
+            {
+                _instance._queue[i] = newNode as ResearchNode;
+            }
         }
 
-        if (!_instance._queue.Any())
+        foreach (var knowledgeCategoryDef in _instance._anomalyQueue.Keys)
         {
-            Enqueue(Find.ResearchManager.currentProj.ResearchNode(), true);
+            for (var i = 0; i < _instance._anomalyQueue[knowledgeCategoryDef].Count; i++)
+            {
+                if (Tree.ResearchToNodesCache.TryGetValue(_instance._anomalyQueue[knowledgeCategoryDef][i].Research, out var newNode))
+                {
+                    _instance._anomalyQueue[knowledgeCategoryDef][i] = newNode as ResearchNode;
+                }
+            }
         }
     }
 
     private static void AttemptBeginResearch()
     {
-        var node = _instance._queue.FirstOrDefault();
+        AttemptBeginResearch(_instance._queue);
+        _instance._anomalyQueue.Values.Do(anomalyQueue => AttemptBeginResearch(anomalyQueue, _instance._queue.Count <= 0));
+    }
+    private static void AttemptBeginResearch(List<ResearchNode> researchNodeQueue, bool needFocus = true)
+    {
+        var node = researchNodeQueue.FirstOrDefault();
         var projectToStart = node?.Research;
-        if (projectToStart is not { CanStartNow: true } || projectToStart.IsFinished)
+        if (projectToStart is not { CanStartNow: true } || projectToStart.IsFinished || Find.ResearchManager.IsCurrentProject(projectToStart))
         {
             return;
         }
 
         // to begin
         AttemptBeginResearchMethodInfo.Invoke(MainTabWindowResearchInstance, [projectToStart]);
-        FocusStartedProject(projectToStart);
+        if (needFocus)
+        {
+            FocusStartedProject(projectToStart);
+        }
     }
 
     private static void FocusStartedProject(ResearchProjectDef projectToStart)

@@ -45,22 +45,22 @@
 如果遇到这种情况，请使用首次打开时加载。</Fluffy.ResearchTree.UIScaleWarning>
   <Fluffy.ResearchTree.CtrlFunctionScroll>使用 Ctrl 键垂直滚动研究树</Fluffy.ResearchTree.CtrlFunctionScroll>
   <Fluffy.ResearchTree.CtrlFunctionZoom>使用 Ctrl 键缩放研究树</Fluffy.ResearchTree.CtrlFunctionZoom>
-  <Fluffy.ResearchTree.ResolutionChange>研究树：检测到图形变化，研究树将重新生成</Fluffy.ResearchTree.ResolutionChange>
+  <Fluffy.ResearchTree.ResolutionChange>研究树：检测到研究树变化，研究树将重新生成</Fluffy.ResearchTree.ResolutionChange>
   <Fluffy.ResearchTree.StorytellerDoesNotAllow>故事讲述人不允许使用这种技术</Fluffy.ResearchTree.StorytellerDoesNotAllow>
   <Fluffy.ResearchTree.RimedievalDoesNotAllow>Rimedieval 设置不允许使用这种技术。</Fluffy.ResearchTree.RimedievalDoesNotAllow>
   <ResearchPal.BuildingResearchTreeAsync>建立研究树</ResearchPal.BuildingResearchTreeAsync>
   <Fluffy.ResearchTree.OverrideResearch>将研究树设置为默认研究选项卡\n（按住 Shift 即可打开原版）</Fluffy.ResearchTree.OverrideResearch>
   <Fluffy.ResearchTree.HoldForClassic>按住 SHIFT 键打开原版研究窗口</Fluffy.ResearchTree.HoldForClassic>
   <Fluffy.ResearchTree.HoldForNew>按住 SHIFT 键打开新的研究窗口</Fluffy.ResearchTree.HoldForNew>
-  <Fluffy.ResearchTree.VerboseLogging>冗长日志记录</Fluffy.ResearchTree.VerboseLogging>
-  <Fluffy.ResearchTree.NoIdeologyPopup>不要显示遗失备忘录警告</Fluffy.ResearchTree.NoIdeologyPopup>
-  <Fluffy.ResearchTree.NoIdeologyPopupTT>选择一项研究时，不会弹出 "将解锁当前意识形态不允许的项目 "的警告提示</Fluffy.ResearchTree.NoIdeologyPopupTT>
-  <Fluffy.ResearchTree.SemiRandomResearchLoaded>半随机研究不允许自由选择研究内容</Fluffy.ResearchTree.SemiRandomResearchLoaded>
+  <Fluffy.ResearchTree.VerboseLogging>启用详细日志</Fluffy.ResearchTree.VerboseLogging>
+  <Fluffy.ResearchTree.NoIdeologyPopup>不显示意思形态导致无法建造警告</Fluffy.ResearchTree.NoIdeologyPopup>
+  <Fluffy.ResearchTree.NoIdeologyPopupTT>选择一项研究时，不会弹出 "因为没有人认可相应的模因, xxx解锁了你无法建造的东西" 的警告提示</Fluffy.ResearchTree.NoIdeologyPopupTT>
+  <Fluffy.ResearchTree.SemiRandomResearchLoaded>Semi Random Research不允许自由选择研究内容</Fluffy.ResearchTree.SemiRandomResearchLoaded>
   <Fluffy.ResearchTree.Reset>重置</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>重置所有设置</Fluffy.ResearchTree.ResetLabel>
   <Fluffy.ResearchTree.BackgroundColor>背景颜色</Fluffy.ResearchTree.BackgroundColor>
   <Fluffy.ResearchTree.LClickRemoveFromQueue>按住 Shift 键从队列中删除</Fluffy.ResearchTree.LClickRemoveFromQueue>
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>未满足 Grimworld 研究要求，右键单击可显示详细信息</Fluffy.ResearchTree.GrimworldDoesNotAllow>
-  <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>世界技术等级设置不允许使用该技术</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
-  <Fluffy.ResearchTree.LoadingWait>树未完成生成，点击可打开香草树</Fluffy.ResearchTree.LoadingWait>
+  <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>World Tech Level设置不允许使用该技术</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
+  <Fluffy.ResearchTree.LoadingWait>研究树尚未生成，点击可打开原版</Fluffy.ResearchTree.LoadingWait>
 </LanguageData>

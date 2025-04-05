@@ -15,8 +15,6 @@ namespace FluffyResearchTree;
 [StaticConstructorOnStartup]
 public static class Assets
 {
-    public static Thread initializeWorker;
-
     public static readonly Texture2D Button;
 
     public static readonly Texture2D ButtonActive;
@@ -343,19 +341,6 @@ public static class Assets
             ColorAvailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.33f, 0.33f);
             ColorUnavailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.125f, 0.33f);
         }
-
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
-        {
-            StartLoadingWorker();
-        }
-    }
-
-
-    public static void StartLoadingWorker()
-    {
-        initializeWorker = new Thread(Tree.Initialize);
-        Logging.Message("Initialization start in background");
-        initializeWorker.Start();
     }
 
     public static bool IsBlockedByMedievalOverhaul(ResearchProjectDef researchProject)

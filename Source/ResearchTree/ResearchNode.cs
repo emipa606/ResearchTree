@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -108,7 +109,7 @@ public class ResearchNode : Node
     {
         get
         {
-            if (Research.IsFinished || Research.IsAnomalyResearch())
+            if (Research.IsFinished || Research.IsHidden)
             {
                 return false;
             }
@@ -128,12 +129,7 @@ public class ResearchNode : Node
 
     private bool getCacheValue()
     {
-        if (!Assets.RefreshResearch)
-        {
-            return availableCache;
-        }
-
-        if (hasRefreshedAvailability)
+        if (!Assets.RefreshResearch || hasRefreshedAvailability)
         {
             return availableCache;
         }
@@ -146,43 +142,13 @@ public class ResearchNode : Node
 
         hasRefreshedAvailability = true;
 
-        if (MissingFacilities(Research).Any())
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (Assets.SemiRandomResearchLoaded && Assets.SemiResearchEnabled)
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (Assets.UsingRimedieval && !Assets.AllowedResearchDefs.Contains(Research))
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (!Research.TechprintRequirementMet)
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (Research.requiredResearchBuilding != null && !Research.PlayerHasAnyAppropriateResearchBench)
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (!Research.PlayerMechanitorRequirementMet)
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (!Research.AnalyzedThingsRequirementsMet)
+        if (MissingFacilities(Research).Any() ||
+            (Assets.SemiRandomResearchLoaded && Assets.SemiResearchEnabled) ||
+            (Assets.UsingRimedieval && !Assets.AllowedResearchDefs.Contains(Research)) ||
+            !Research.TechprintRequirementMet ||
+            (Research.requiredResearchBuilding != null && !Research.PlayerHasAnyAppropriateResearchBench) ||
+            !Research.PlayerMechanitorRequirementMet ||
+            !Research.AnalyzedThingsRequirementsMet)
         {
             availableCache = false;
             return availableCache;
@@ -199,19 +165,9 @@ public class ResearchNode : Node
             }
         }
 
-        if (Assets.IsBlockedByGrimworld(Research))
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (Assets.IsBlockedByWorldTechLevel(Research))
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
-        if (Assets.IsBlockedByMedievalOverhaul(Research))
+        if (Assets.IsBlockedByGrimworld(Research) ||
+            Assets.IsBlockedByWorldTechLevel(Research) ||
+            Assets.IsBlockedByMedievalOverhaul(Research))
         {
             availableCache = false;
             return availableCache;
@@ -225,18 +181,9 @@ public class ResearchNode : Node
 
         if (Research.prerequisites?.Any() == true)
         {
-            foreach (var researchPrerequisite in Research.prerequisites)
+            if (Research.prerequisites.Where(researchPrerequisite => !researchPrerequisite.IsFinished)
+                .Any(researchPrerequisite => !researchPrerequisite.ResearchNode().Available))
             {
-                if (researchPrerequisite.IsFinished)
-                {
-                    continue;
-                }
-
-                if (researchPrerequisite.ResearchNode().Available)
-                {
-                    continue;
-                }
-
                 availableCache = false;
                 return availableCache;
             }
@@ -244,18 +191,9 @@ public class ResearchNode : Node
 
         if (Research.hiddenPrerequisites?.Any() == true)
         {
-            foreach (var researchPrerequisite in Research.hiddenPrerequisites)
+            if (Research.hiddenPrerequisites.Where(researchPrerequisite => !researchPrerequisite.IsFinished)
+                .Any(researchPrerequisite => !researchPrerequisite.ResearchNode().Available))
             {
-                if (researchPrerequisite.IsFinished)
-                {
-                    continue;
-                }
-
-                if (researchPrerequisite.ResearchNode().Available)
-                {
-                    continue;
-                }
-
                 availableCache = false;
                 return availableCache;
             }
@@ -377,7 +315,7 @@ public class ResearchNode : Node
         return base.IsVisible(visibleRect) && !Assets.IsBlockedBySOS2(Research);
     }
 
-    public override void Draw(Rect visibleRect, bool forceDetailedMode = false)
+    public override void Draw(Rect visibleRect, bool forceDetailedMode = false, bool drawLabel = true)
     {
         if (!IsVisible(visibleRect))
         {
@@ -509,6 +447,12 @@ public class ResearchNode : Node
                     }
                 }
             }
+
+        }
+
+        if (drawLabel)
+        {
+            Queue.DrawOrderLabel(visibleRect, this);
         }
 
         if (!Widgets.ButtonInvisible(Rect))
@@ -731,7 +675,7 @@ public class ResearchNode : Node
     public void DrawAt(Vector2 pos, Rect visibleRect, bool forceDetailedMode = false)
     {
         SetRects(pos);
-        Draw(visibleRect, forceDetailedMode);
+        Draw(visibleRect, forceDetailedMode, false);
         SetRects();
     }
 
@@ -741,6 +685,8 @@ public class ResearchNode : Node
     //       We will try it out, but that’s it for now.
     public void HandleVanillaNodeClickEvent()
     {
+        // Don't understand what this sign does, but it needed.
+        Assets.RefreshResearch = true;
         if (!Available)
         {
             return;

@@ -42,6 +42,8 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
     public bool ViewRectInnerDirty = true;
 
+    public bool TreeRectDirty = true;
+
     public MainTabWindow_ResearchTree()
     {
         doWindowBackground = Assets.UsingMinimap;
@@ -106,7 +108,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
     {
         get
         {
-            if (_treeRect != default)
+            if (!TreeRectDirty)
             {
                 return _treeRect;
             }
@@ -114,6 +116,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             var width = Tree.Size.x * (Constants.NodeSize.x + Constants.NodeMargins.x);
             var height = Tree.Size.z * (Constants.NodeSize.y + Constants.NodeMargins.y) * 1.02f; // To avoid cutoff
             _treeRect = new Rect(0f, 0f, width, height);
+            TreeRectDirty = false;
 
             return _treeRect;
         }
@@ -179,7 +182,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             }
         }
 
-        Queue.RefreshQueue();
+        Queue.RefreshQueuedNode();
         _dragging = false;
         closeOnClickedOutside = false;
 
@@ -222,7 +225,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         ApplyZoomLevel();
         _scrollPosition = GUI.BeginScrollView(ViewRect, _scrollPosition, TreeRect);
         Tree.Draw(VisibleRect);
-        Queue.DrawLabels(VisibleRect);
         HandleZoom();
         GUI.EndScrollView(false);
         HandleDragging();

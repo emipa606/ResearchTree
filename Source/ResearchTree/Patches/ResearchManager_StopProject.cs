@@ -9,7 +9,7 @@ public class ResearchManager_StopProject
 {
     private static void Postfix(ResearchProjectDef proj)
     {
-        if (proj == null || proj.IsAnomalyResearch())
+        if (proj == null)
         {
             return;
         }
