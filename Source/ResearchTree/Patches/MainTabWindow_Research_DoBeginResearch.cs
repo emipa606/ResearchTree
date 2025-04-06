@@ -12,6 +12,6 @@ public class MainTabWindow_Research_DoBeginResearch
 {
     private static void Prefix(ResearchProjectDef projectToStart)
     {
-        Queue.EnqueueFirst(projectToStart);
+        Queue.DoBeginResearch(projectToStart);
     }
 }

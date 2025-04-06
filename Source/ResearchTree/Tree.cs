@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -128,8 +129,12 @@ public static class Tree
 
         if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
         {
-            LongEventHandler.QueueLongEvent(Initialize, "ResearchPal.BuildingResearchTreeAsync",
-                true, null);
+            LongEventHandler.QueueLongEvent(() =>
+                {
+                    var t = new Thread(Initialize);
+                    t.Start();
+                },"ResearchPal.BuildingResearchTreeAsync",
+                true, null, false);
         }
     }
 
