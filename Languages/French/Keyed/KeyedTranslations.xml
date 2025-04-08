@@ -38,7 +38,6 @@
   <Fluffy.ResearchTree.LoadTypeThree>Première ouverture de l'arbre de recherche</Fluffy.ResearchTree.LoadTypeThree>
   <Fluffy.ResearchTree.LoadTypeFour>Ne pas générer d'arbre de recherche, mais conserver la file d'attente de recherche</Fluffy.ResearchTree.LoadTypeFour>
   <Fluffy.ResearchTree.PreparingTree.LayoutNew>Finalisation de la présentation de l'arbre de recherche</Fluffy.ResearchTree.PreparingTree.LayoutNew>
-  <Fluffy.ResearchTree.VanillaGraphics>Utiliser les anciennes méthodes graphiques (en cas de scintillement)</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.ShowCompletion>Afficher un message d'achèvement pour les recherches terminées</Fluffy.ResearchTree.ShowCompletion>
   <Fluffy.ResearchTree.StillLoading>L'arbre se charge pour la première fois, ce qui peut prendre un certain temps.</Fluffy.ResearchTree.StillLoading>
   <Fluffy.ResearchTree.UIScaleWarning>Lorsque l'échelle de l'interface utilisateur est supérieure à 1x, il se peut que les étiquettes de recherche soient coupées si vous utilisez l'option de chargement en arrière-plan.

@@ -38,9 +38,8 @@
   <Fluffy.ResearchTree.LoadTypeThree>首次打开研究树</Fluffy.ResearchTree.LoadTypeThree>
   <Fluffy.ResearchTree.LoadTypeFour>不生成研究树，但保留研究队列</Fluffy.ResearchTree.LoadTypeFour>
   <Fluffy.ResearchTree.PreparingTree.LayoutNew>最终确定研究树布局</Fluffy.ResearchTree.PreparingTree.LayoutNew>
-  <Fluffy.ResearchTree.VanillaGraphics>使用旧的图形方法（如果闪烁）</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.ShowCompletion>研究完成后弹出完成对话框</Fluffy.ResearchTree.ShowCompletion>
-  <Fluffy.ResearchTree.StillLoading>研究树首次加载，可能需要一段时间</Fluffy.ResearchTree.StillLoading>
+  <Fluffy.ResearchTree.StillLoading>研究树加载中，可能需要一段时间</Fluffy.ResearchTree.StillLoading>
   <Fluffy.ResearchTree.UIScaleWarning>如果使用后台加载选项，当用户界面比例大于 1x 时，可能会出现研究标签被切断的情况。
 如果遇到这种情况，请使用首次打开时加载。</Fluffy.ResearchTree.UIScaleWarning>
   <Fluffy.ResearchTree.CtrlFunctionScroll>使用 Ctrl 键垂直滚动研究树</Fluffy.ResearchTree.CtrlFunctionScroll>

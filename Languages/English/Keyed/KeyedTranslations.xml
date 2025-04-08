@@ -37,7 +37,6 @@
   <Fluffy.ResearchTree.LoadingWait>Tree not finished generating, click to open vanilla tree</Fluffy.ResearchTree.LoadingWait>
   <Fluffy.ResearchTree.CurrentModVersion>Installed mod-version: {0}</Fluffy.ResearchTree.CurrentModVersion>
   <Fluffy.ResearchTree.PauseOnOpen>Pause game on opening research-tree</Fluffy.ResearchTree.PauseOnOpen>
-  <Fluffy.ResearchTree.VanillaGraphics>Use the old graphical methods (if flickering)</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.LoadType>When should the research-tree get generated?</Fluffy.ResearchTree.LoadType>
   <Fluffy.ResearchTree.LoadTypeOne>During game load</Fluffy.ResearchTree.LoadTypeOne>
   <Fluffy.ResearchTree.LoadTypeTwo>After game load in background</Fluffy.ResearchTree.LoadTypeTwo>
