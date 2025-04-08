@@ -13,7 +13,13 @@ namespace FluffyResearchTree;
 
 public static class Tree
 {
-    public static bool Initialized;
+    private static readonly object InitLock = new();
+    
+    private static Thread _initializeWorker;
+    
+    public static volatile bool Initialized;
+    
+    private static volatile bool _initializing;
 
     public static IntVec2 Size = IntVec2.Zero;
 
@@ -24,9 +30,7 @@ public static class Tree
     private static List<TechLevel> _relevantTechLevels;
 
     private static Dictionary<TechLevel, IntRange> _techLevelBounds;
-
-    private static volatile bool _initializing;
-
+    
     public static bool OrderDirty;
 
     public static bool FirstLoadDone;
@@ -126,84 +130,68 @@ public static class Tree
             MainTabWindow_ResearchTree.Instance.ViewRectDirty = true;
             MainTabWindow_ResearchTree.Instance.TreeRectDirty = true;
         }
-
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
-        {
-            LongEventHandler.QueueLongEvent(() =>
-                {
-                    var t = new Thread(Initialize);
-                    t.Start();
-                },"ResearchPal.BuildingResearchTreeAsync",
-                true, null, false);
-        }
+        
+        Initialize();
     }
 
     public static void Initialize()
     {
-        if (FluffyResearchTreeMod.instance?.Settings?.LoadType == Constants.LoadTypeDoNotGenerateResearchTree
-            || Initialized || _initializing)
+        if (FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree() || Initialized || _initializing)
         {
             return;
         }
 
-        _initializing = true;
-
-        if (FluffyResearchTreeMod.instance?.Settings?.LoadType == Constants.LoadTypeLoadInBackground)
+        lock (InitLock)
         {
-            try
+            if (Initialized || _initializing)
             {
-                Logging.Message("Initialization start in background");
-                Logging.Message("CheckPrerequisites");
-                CheckPrerequisites();
-                Logging.Message("CreateEdges");
-                CreateEdges();
-                Logging.Message("HorizontalPositions");
-                HorizontalPositions();
-                Logging.Message("NormalizeEdges");
-                NormalizeEdges();
-                Logging.Message("Collapse");
-                Collapse();
-                Logging.Message("MinimizeCrossings");
-                MinimizeCrossings();
-                Logging.Message("MinimizeEdgeLength");
-                MinimizeEdgeLength();
-                Logging.Message("RemoveEmptyRows");
-                RemoveEmptyRows();
-                Logging.Message("Done");
-                Initialized = true;
-            }
-            catch (Exception ex)
-            {
-                Logging.Error("Error initializing research tree, will retry." + ex, true);
+                return;
             }
 
+            _initializing = true;
+            _initializeWorker = new Thread(Init);
+            _initializeWorker.Start();  
+        }
+    }
+
+    private static void Init()
+    {
+        Logging.Message("Initialization start in background");
+        try
+        {
+            Logging.Message("CheckPrerequisites");
+            CheckPrerequisites();
+            Logging.Message("CreateEdges");
+            CreateEdges();
+            Logging.Message("HorizontalPositions");
+            HorizontalPositions();
+            Logging.Message("NormalizeEdges");
+            NormalizeEdges();
+            Logging.Message("Collapse");
+            Collapse();
+            Logging.Message("MinimizeCrossings");
+            MinimizeCrossings();
+            Logging.Message("MinimizeEdgeLength");
+            MinimizeEdgeLength();
+            Logging.Message("RemoveEmptyRows");
+            RemoveEmptyRows();
+            Logging.Message("Done");
+            Initialized = true;
+        }
+        catch (Exception ex)
+        {
+            Logging.Error("Error initializing research tree, next open research tree window will retry. \n" + ex, true);
+        }    
+        finally
+        {
             _initializing = false;
-            return;
         }
 
-        LongEventHandler.QueueLongEvent(CheckPrerequisites, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-        LongEventHandler.QueueLongEvent(CreateEdges, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-        LongEventHandler.QueueLongEvent(HorizontalPositions, "Fluffy.ResearchTree.PreparingTree.Setup", false,
-            null);
-        LongEventHandler.QueueLongEvent(NormalizeEdges, "Fluffy.ResearchTree.PreparingTree.Setup", false, null);
-        LongEventHandler.QueueLongEvent(Collapse, "Fluffy.ResearchTree.PreparingTree.CrossingReduction", false,
-            null);
-        LongEventHandler.QueueLongEvent(MinimizeCrossings, "Fluffy.ResearchTree.PreparingTree.CrossingReduction",
-            false, null);
-        LongEventHandler.QueueLongEvent(MinimizeEdgeLength, "Fluffy.ResearchTree.PreparingTree.LayoutNew", false,
-            null);
-        LongEventHandler.QueueLongEvent(RemoveEmptyRows, "Fluffy.ResearchTree.PreparingTree.LayoutNew", false, null);
-        LongEventHandler.QueueLongEvent(delegate
-            {
-                Initialized = true;
-                _initializing = false;
-            }, "Fluffy.ResearchTree.PreparingTree.LayoutNew",
-            false, null);
-        LongEventHandler.QueueLongEvent(MainTabWindow_ResearchTree.Instance.Notify_TreeInitialized,
-            "Fluffy.ResearchTree.RestoreQueue", false, null);
-        // open tab
-        LongEventHandler.QueueLongEvent(() => { Find.MainTabsRoot.ToggleTab(MainButtonDefOf.Research); },
-            "Fluffy.ResearchTree.RestoreQueue", false, null);
+        if (Initialized && FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeFirstTimeOpening)
+        {
+            // open tab
+            Find.MainTabsRoot.ToggleTab(MainButtonDefOf.Research);
+        }
     }
 
     // Initialize step eight

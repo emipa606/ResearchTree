@@ -349,11 +349,12 @@ public class Queue : GameComponent
 
     public override void FinalizeInit()
     {
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
+        if (FluffyResearchTreeMod.instance.Settings.LoadType != Constants.LoadTypeLoadInBackground)
         {
-            LongEventHandler.QueueLongEvent(Tree.Initialize, "ResearchPal.BuildingResearchTreeAsync",
-                true, null);
+            return;
         }
+        LongEventHandler.SetCurrentEventText("ResearchPal.BuildingResearchTreeAsync".Translate());
+        Tree.Initialize();
     }
 
     public override void StartedNewGame()
@@ -415,13 +416,13 @@ public class Queue : GameComponent
     public static void DrawLabelForMainButton(Rect rect)
     {
         var currentStart = rect.xMax - Constants.SmallQueueLabelSize - Constants.Margin;
-        if (!Tree.Initialized && FluffyResearchTreeMod.instance.Settings.LoadType != Constants.LoadTypeFirstTimeOpening
-                              && FluffyResearchTreeMod.instance.Settings.OverrideResearch)
+        if (!Tree.Initialized && !FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree())
         {
             DrawLabel(
                 new Rect(currentStart, 0f, Constants.SmallQueueLabelSize, Constants.SmallQueueLabelSize)
                     .CenteredOnYIn(rect), Color.yellow,
                 Color.grey, "..", "Fluffy.ResearchTree.StillLoading".Translate());
+            TooltipHandler.TipRegion(rect, "Fluffy.ResearchTree.LoadingWait".Translate());
             return;
         }
 

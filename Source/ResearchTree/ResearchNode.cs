@@ -114,8 +114,7 @@ public class ResearchNode : Node
                 return false;
             }
 
-            return FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeDoNotGenerateResearchTree
-                   || DebugSettings.godMode || getCacheValue();
+            return FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree() || DebugSettings.godMode || getCacheValue();
         }
     }
 

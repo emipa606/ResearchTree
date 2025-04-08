@@ -17,12 +17,12 @@ public class MainButtonWorker_DoButton
 
         Queue.DrawLabelForMainButton(rect);
 
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeDoNotGenerateResearchTree)
+        if (FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree())
         {
             return;
         }
 
-        if (!Tree.Initialized && FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
+        if (!Tree.Initialized)
         {
             TooltipHandler.TipRegion(rect, "Fluffy.ResearchTree.LoadingWait".Translate());
             return;

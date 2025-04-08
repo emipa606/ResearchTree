@@ -149,11 +149,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         }
     }
 
-    public void Notify_TreeInitialized()
-    {
-        SetRects();
-    }
-
     public override void PreOpen()
     {
         base.PreOpen();
