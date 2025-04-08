@@ -210,12 +210,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
     public override void DoWindowContents(Rect canvas)
     {
-        if (!Tree.Initialized)
-        {
-            Close();
-            return;
-        }
-
         DrawTopBar(new Rect(canvas.xMin, canvas.yMin, canvas.width, Constants.TopBarHeight));
         ApplyZoomLevel();
         _scrollPosition = GUI.BeginScrollView(ViewRect, _scrollPosition, TreeRect);
@@ -348,12 +342,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             searchRect.width - Constants.SmallQueueLabelSize - Constants.Margin,
             searchRect.height
         ).CenteredOnYIn(canvas.BottomHalf());
-        if (ModsConfig.AnomalyActive && Widgets.ButtonText(anomalyBtnRect, ResearchTabDefOf.Anomaly.generalTitle))
-        {
-            ((MainTabWindow_Research)MainButtonDefOf.Research.TabWindow).CurTab = ResearchTabDefOf.Anomaly;
-            Find.MainTabsRoot.ToggleTab(MainButtonDefOf.Research);
-            return;
-        }
 
         _quickSearchWidget.OnGUI(searchRect, () => UpdateSearchResults(canvas));
     }

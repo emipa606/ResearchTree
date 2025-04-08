@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using UnityEngine;
-using Verse;
 
 namespace FluffyResearchTree;
 
@@ -12,12 +11,6 @@ public class MainTabsRoot_ToggleTab
     {
         if (newTab == null || newTab != MainButtonDefOf.Research ||
             Assets.SemiRandomResearchLoaded && Assets.SemiResearchEnabled)
-        {
-            return;
-        }
-
-        if (ModsConfig.AnomalyActive && ((MainTabWindow_Research)MainButtonDefOf.Research.TabWindow).CurTab ==
-            ResearchTabDefOf.Anomaly)
         {
             return;
         }

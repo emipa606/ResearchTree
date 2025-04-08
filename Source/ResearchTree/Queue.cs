@@ -39,6 +39,14 @@ public class Queue : GameComponent
         _instance = this;
         EnsureAnomalyQueueInitialized();
     }
+    
+    private class DelayedAction
+    {
+        public int triggerTick;
+        public Action action;
+    }
+
+    private readonly List<DelayedAction> _actions = [];
 
     // TODO: Determine the timing of this method invocation
     private void EnsureAnomalyQueueInitialized()
@@ -388,6 +396,34 @@ public class Queue : GameComponent
         {
             Enqueue(researchNode);
         }
+    }
+
+    public override void GameComponentTick()
+    {
+        var currentTick = Find.TickManager.TicksGame;
+        for (var i = _actions.Count - 1; i >= 0; i--)
+        {
+            if (currentTick < _actions[i].triggerTick)
+            {
+                continue;
+            }
+            _actions[i].action?.Invoke();
+            _actions.RemoveAt(i);
+        }
+    }
+
+    private void Schedule(Action action, int delayTicks)
+    {
+        _actions.Add(new DelayedAction
+        {
+            triggerTick = Find.TickManager.TicksGame + delayTicks,
+            action = action
+        });
+    }
+
+    public static void EntityDiscovered()
+    {
+        _instance.Schedule(() => { Tree.Reset(false); }, delayTicks: 600);
     }
 
     public static void DrawOrderLabel(Rect visibleRect, ResearchNode node)
