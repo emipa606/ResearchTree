@@ -460,7 +460,7 @@ public class ResearchNode : Node
             Queue.DrawOrderLabel(visibleRect, this);
         }
 
-        if (!mouseOver || !Widgets.ButtonInvisible(Rect))
+        if (!Widgets.ButtonInvisible(Rect))
         {
             return;
         }
