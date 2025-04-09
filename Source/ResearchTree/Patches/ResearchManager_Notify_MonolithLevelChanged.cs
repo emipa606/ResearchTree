@@ -13,6 +13,6 @@ public class ResearchManager_Notify_MonolithLevelChanged
             return;
         }
 
-        Tree.Reset(false);
+        Tree.Instance.Reset();
     }
 }

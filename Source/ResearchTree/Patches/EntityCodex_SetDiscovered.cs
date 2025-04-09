@@ -36,7 +36,7 @@ public class EntityCodex_SetDiscovered
 
         var opts = new List<CodeInstruction>
         {
-            new(OpCodes.Call, AccessTools.Method(typeof(Queue), nameof(Queue.EntityDiscovered))) // call  void FluffyResearchTree.Queue::EntityDiscovered()
+            new(OpCodes.Call, AccessTools.Method(typeof(Tree), nameof(Tree.EntityDiscovered))) // call  void FluffyResearchTree.Tree::EntityDiscovered()
         };
 
         codes.InsertRange(startIndex, opts);

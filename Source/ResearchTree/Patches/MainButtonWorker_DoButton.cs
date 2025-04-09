@@ -22,7 +22,7 @@ public class MainButtonWorker_DoButton
             return;
         }
 
-        if (!Tree.Initialized)
+        if (!Tree.Instance.Initialized)
         {
             TooltipHandler.TipRegion(rect, "Fluffy.ResearchTree.LoadingWait".Translate());
             return;

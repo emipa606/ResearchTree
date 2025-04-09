@@ -33,7 +33,7 @@ public static class SemiRandomResearch_DrawGoToTechTreeButton
         var researchTab = MainButtonDefOf.Research;
         ((MainTabWindow_Research)MainButtonDefOf.Research.TabWindow).CurTab = ResearchTabDefOf.Main;
 
-        if (Tree.Initialized)
+        if (Tree.Instance.Initialized)
         {
             switch (FluffyResearchTreeMod.instance.Settings.OverrideResearch)
             {

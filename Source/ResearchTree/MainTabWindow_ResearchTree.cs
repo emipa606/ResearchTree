@@ -113,8 +113,8 @@ public class MainTabWindow_ResearchTree : MainTabWindow
                 return _treeRect;
             }
 
-            var width = Tree.Size.x * (Constants.NodeSize.x + Constants.NodeMargins.x);
-            var height = Tree.Size.z * (Constants.NodeSize.y + Constants.NodeMargins.y) * 1.02f; // To avoid cutoff
+            var width = Tree.Instance.Size.x * (Constants.NodeSize.x + Constants.NodeMargins.x);
+            var height = Tree.Instance.Size.z * (Constants.NodeSize.y + Constants.NodeMargins.y) * 1.02f; // To avoid cutoff
             _treeRect = new Rect(0f, 0f, width, height);
             TreeRectDirty = false;
 
@@ -154,15 +154,14 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         base.PreOpen();
         Assets.CachedWorldTechLevel = TechLevel.Undefined;
         SetRects();
-        Tree.WaitForInitialization();
         Assets.RefreshResearch = true;
-        if (Tree.FirstLoadDone)
+        if (Tree.Instance.FirstLoadDone)
         {
-            Tree.ResetNodeAvailabilityCache();
+            Tree.Instance.ResetNodeAvailabilityCache();
         }
         else
         {
-            Tree.FirstLoadDone = true;
+            Tree.Instance.FirstLoadDone = true;
         }
 
         if (Assets.SemiRandomResearchLoaded)
@@ -173,11 +172,10 @@ public class MainTabWindow_ResearchTree : MainTabWindow
                 .GetValue(Assets.SettingsInstance);
             if (preValue != Assets.SemiResearchEnabled)
             {
-                Tree.ResetNodeAvailabilityCache();
+                Tree.Instance.ResetNodeAvailabilityCache();
             }
         }
 
-        Queue.RefreshQueuedNode();
         _dragging = false;
         closeOnClickedOutside = false;
 
@@ -210,10 +208,16 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
     public override void DoWindowContents(Rect canvas)
     {
+        if (!Tree.Instance.Initialized)
+        {
+            Close();
+            return;
+        }
+        
         DrawTopBar(new Rect(canvas.xMin, canvas.yMin, canvas.width, Constants.TopBarHeight));
         ApplyZoomLevel();
         _scrollPosition = GUI.BeginScrollView(ViewRect, _scrollPosition, TreeRect);
-        Tree.Draw(VisibleRect);
+        Tree.Instance.Draw(VisibleRect);
         HandleZoom();
         GUI.EndScrollView(false);
         HandleDragging();
@@ -394,7 +398,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
         var somethingHighlighted = true;
         var list = new List<FloatMenuOption>();
-        foreach (var node in Tree.Nodes.OfType<ResearchNode>()
+        foreach (var node in Tree.Instance.Nodes.OfType<ResearchNode>()
                      .Where(n => _matchingProjects.Contains(n.Research))
                      .OrderBy(n => n.Research.ResearchViewX))
         {

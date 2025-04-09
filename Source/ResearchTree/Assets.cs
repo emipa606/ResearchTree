@@ -332,15 +332,6 @@ public static class Assets
                 }
             }
         }
-
-        var relevantTechLevels = Tree.RelevantTechLevels;
-        var count = relevantTechLevels.Count;
-        for (var i = 0; i < count; i++)
-        {
-            ColorCompleted[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.75f, 0.75f);
-            ColorAvailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.33f, 0.33f);
-            ColorUnavailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.125f, 0.33f);
-        }
     }
 
     public static bool IsBlockedByMedievalOverhaul(ResearchProjectDef researchProject)

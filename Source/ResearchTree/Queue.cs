@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
-using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -40,14 +39,6 @@ public class Queue : GameComponent
         EnsureAnomalyQueueInitialized();
     }
     
-    private class DelayedAction
-    {
-        public int triggerTick;
-        public Action action;
-    }
-
-    private readonly List<DelayedAction> _actions = [];
-
     // TODO: Determine the timing of this method invocation
     private void EnsureAnomalyQueueInitialized()
     {
@@ -264,7 +255,7 @@ public class Queue : GameComponent
 
     private static IEnumerable<ResearchNode> SortResearchNodes(IEnumerable<ResearchNode> nodes)
     {
-        return Tree.Initialized ? nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent) :
+        return Tree.Instance.Initialized ? nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent) :
             nodes.OrderBy(node => node.Research.ResearchViewX).ThenBy(node => node.Research.ResearchViewY);
     }
 
@@ -355,77 +346,6 @@ public class Queue : GameComponent
         Scribe_Collections.Look(ref _saveableQueue, "Queue", LookMode.Def);
     }
 
-    public override void FinalizeInit()
-    {
-        if (FluffyResearchTreeMod.instance.Settings.LoadType != Constants.LoadTypeLoadInBackground)
-        {
-            return;
-        }
-        LongEventHandler.SetCurrentEventText("ResearchPal.BuildingResearchTreeAsync".Translate());
-        Tree.Initialize();
-    }
-
-    public override void StartedNewGame()
-    {
-        if (!Tree.Initialized)
-        {
-            return;
-        }
-        // Avoid cross-archiving impact
-        Tree.Reset(false);
-    }
-
-    public override void LoadedGame()
-    {
-        if (!Tree.Initialized)
-        {
-            return;
-        }
-        // Avoid cross-archiving impact
-        Tree.Reset(false);
-        
-        if (_saveableQueue.NullOrEmpty())
-        {
-            return;
-        }
-        
-        Tree.WaitForInitialization();
-        
-        foreach (var researchNode in _saveableQueue.Select(item => item.ResearchNode())
-                     .Where(researchNode => researchNode != null))
-        {
-            Enqueue(researchNode);
-        }
-    }
-
-    public override void GameComponentTick()
-    {
-        var currentTick = Find.TickManager.TicksGame;
-        for (var i = _actions.Count - 1; i >= 0; i--)
-        {
-            if (currentTick < _actions[i].triggerTick)
-            {
-                continue;
-            }
-            _actions[i].action?.Invoke();
-            _actions.RemoveAt(i);
-        }
-    }
-
-    private void Schedule(Action action, int delayTicks)
-    {
-        _actions.Add(new DelayedAction
-        {
-            triggerTick = Find.TickManager.TicksGame + delayTicks,
-            action = action
-        });
-    }
-
-    public static void EntityDiscovered()
-    {
-        _instance.Schedule(() => { Tree.Reset(false); }, delayTicks: 600);
-    }
-
     public static void DrawOrderLabel(Rect visibleRect, ResearchNode node)
     {
         DrawLabels(visibleRect, node,
@@ -452,7 +372,7 @@ public class Queue : GameComponent
     public static void DrawLabelForMainButton(Rect rect)
     {
         var currentStart = rect.xMax - Constants.SmallQueueLabelSize - Constants.Margin;
-        if (!Tree.Initialized && !FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree())
+        if (!Tree.Instance.Initialized && !FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree())
         {
             DrawLabel(
                 new Rect(currentStart, 0f, Constants.SmallQueueLabelSize, Constants.SmallQueueLabelSize)
@@ -585,11 +505,11 @@ public class Queue : GameComponent
         DoFinishResearchProject(node.Research);
     }
 
-    public static void RefreshQueuedNode()
+    public static void RefreshNode()
     {
         for (var i = 0; i < _instance._queue.Count; i++)
         {
-            if (Tree.ResearchToNodesCache.TryGetValue(_instance._queue[i].Research, out var newNode))
+            if (Tree.Instance.ResearchToNodesCache.TryGetValue(_instance._queue[i].Research, out var newNode))
             {
                 _instance._queue[i] = newNode as ResearchNode;
             }
@@ -599,12 +519,24 @@ public class Queue : GameComponent
         {
             for (var i = 0; i < _instance._anomalyQueue[knowledgeCategoryDef].Count; i++)
             {
-                if (Tree.ResearchToNodesCache.TryGetValue(_instance._anomalyQueue[knowledgeCategoryDef][i].Research, out var newNode))
+                if (Tree.Instance.ResearchToNodesCache.TryGetValue(_instance._anomalyQueue[knowledgeCategoryDef][i].Research, out var newNode))
                 {
                     _instance._anomalyQueue[knowledgeCategoryDef][i] = newNode as ResearchNode;
                 }
             }
         }
+
+        if (_instance._saveableQueue.NullOrEmpty())
+        {
+            return;
+        }
+        
+        foreach (var researchNode in _instance._saveableQueue.Select(item => item.ResearchNode())
+                     .Where(researchNode => researchNode != null))
+        {
+            Enqueue(researchNode);
+        }
+        _instance._saveableQueue.Clear();
     }
 
     private static void AttemptBeginResearch()

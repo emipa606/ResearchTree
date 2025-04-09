@@ -25,7 +25,7 @@ public class MainTabsRoot_ToggleTab
             newTab = Assets.OrganizedResearchTab;
         }
 
-        if (FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree() || !Tree.Initialized)
+        if (FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree() || !Tree.Instance.Initialized)
         {
             return;
         }

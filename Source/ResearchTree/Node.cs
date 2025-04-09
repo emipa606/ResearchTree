@@ -185,8 +185,8 @@ public class Node
 
             _pos.x = value;
             _rectsSet = false;
-            Tree.Size.x = Tree.Nodes.Max(n => n.X);
-            Tree.OrderDirty = true;
+            Tree.Instance.Size.x = Tree.Instance.Nodes.Max(n => n.X);
+            Tree.Instance.OrderDirty = true;
         }
     }
 
@@ -207,8 +207,8 @@ public class Node
 
             _pos.y = value;
             _rectsSet = false;
-            Tree.Size.z = Tree.Nodes.Max(n => n.Y);
-            Tree.OrderDirty = true;
+            Tree.Instance.Size.z = Tree.Instance.Nodes.Max(n => n.Y);
+            Tree.Instance.OrderDirty = true;
         }
     }
 
@@ -225,8 +225,8 @@ public class Node
             }
 
             _pos.y = value;
-            Tree.Size.z = Tree.Nodes.Max(n => n.Y) + 1;
-            Tree.OrderDirty = true;
+            Tree.Instance.Size.z = Tree.Instance.Nodes.Max(n => n.Y) + 1;
+            Tree.Instance.OrderDirty = true;
         }
     }
 
