@@ -62,4 +62,5 @@
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>未满足 Grimworld 研究要求，右键单击可显示详细信息</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>World Tech Level设置不允许使用该技术</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>研究树尚未生成，点击可打开原版</Fluffy.ResearchTree.LoadingWait>
+  <Fluffy.ResearchTree.Anomaly>异常研究</Fluffy.ResearchTree.Anomaly>
 </LanguageData>

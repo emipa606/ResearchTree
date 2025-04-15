@@ -62,4 +62,5 @@
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>No se cumple el requisito de estudio de Grimworld, haz clic con el botón derecho para mostrar información detallada</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>La configuración del nivel técnico mundial no permite esta tecnología</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>Árbol no terminado de generar, haga clic para abrir el árbol de vainilla</Fluffy.ResearchTree.LoadingWait>
+  <Fluffy.ResearchTree.Anomaly>Investigación de anomalías</Fluffy.ResearchTree.Anomaly>
 </LanguageData>

@@ -148,7 +148,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             ];
         }
     }
-
+    
     public override void PreOpen()
     {
         base.PreOpen();

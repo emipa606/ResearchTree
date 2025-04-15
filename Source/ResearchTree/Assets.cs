@@ -122,6 +122,22 @@ public static class Assets
                 .GetValue(SettingsInstance);
         }
 
+        if (ModLister.GetActiveModWithIdentifier("arodoid.semirandomprogression", true) != null)
+        {
+            SemiRandomTexture2D =
+                ContentFinder<Texture2D>.Get("UI/Buttons/MainButtons/CM_Semi_Random_Research_ResearchTree");
+            new Harmony("Mlie.ResearchTree").Patch(
+                AccessTools.Method(typeof(Widgets), nameof(Widgets.ButtonText),
+                    [typeof(Rect), typeof(string), typeof(bool), typeof(bool), typeof(bool), typeof(TextAnchor)]),
+                new HarmonyMethod(SemiRandomResearchProgressionFork_ButtonText.Prefix));
+            SemiRandomResearchLoaded = true;
+            SettingsInstance = AccessTools.Field("CM_Semi_Random_Research.SemiRandomResearchMod:settings")
+                .GetValue(null);
+            SemiResearchEnabled = (bool)AccessTools
+                .Field("CM_Semi_Random_Research.SemiRandomResearchModSettings:featureEnabled")
+                .GetValue(SettingsInstance);
+        }
+
         Button = ContentFinder<Texture2D>.Get("Buttons/button");
         ButtonActive = ContentFinder<Texture2D>.Get("Buttons/button-active");
         ResearchIcon = ContentFinder<Texture2D>.Get("Icons/Research");

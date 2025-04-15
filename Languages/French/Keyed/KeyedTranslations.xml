@@ -62,4 +62,5 @@ Veuillez utiliser l'option de chargement à la première ouverture si vous renco
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>La condition d'étude de Grimworld n'est pas remplie, cliquez sur le bouton droit de la souris pour afficher les informations détaillées.</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>Les paramètres du niveau technologique mondial ne permettent pas l'utilisation de cette technologie</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>L'arbre n'a pas fini d'être généré, cliquez pour ouvrir l'arbre vanille</Fluffy.ResearchTree.LoadingWait>
+  <Fluffy.ResearchTree.Anomaly>Recherche sur les anomalies</Fluffy.ResearchTree.Anomaly>
 </LanguageData>
