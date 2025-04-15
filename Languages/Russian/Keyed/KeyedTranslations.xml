@@ -21,7 +21,6 @@
   <Fluffy.ResearchTree.StillLoading>Древо исследований загружается в первый раз, это может занять некоторое время</Fluffy.ResearchTree.StillLoading>
   <Fluffy.ResearchTree.CurrentModVersion>Установленная версия мода: {0}</Fluffy.ResearchTree.CurrentModVersion>
   <Fluffy.ResearchTree.PauseOnOpen>Приостанавливать игру при открытии дерева исследований</Fluffy.ResearchTree.PauseOnOpen>
-  <Fluffy.ResearchTree.VanillaGraphics>Использовать старые графические методы (при наличии мерцания)</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.LoadType>Когда должно быть сформировано дерево исследований?</Fluffy.ResearchTree.LoadType>
   <Fluffy.ResearchTree.LoadTypeOne>   Во время загрузки игры</Fluffy.ResearchTree.LoadTypeOne>
   <Fluffy.ResearchTree.LoadTypeTwo>   После загрузки игры в фоновом режиме</Fluffy.ResearchTree.LoadTypeTwo>
@@ -63,5 +62,4 @@
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>Требование изучения Grimworld не выполнено, щелкните правой кнопкой мыши, чтобы показать подробную информацию</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>Настройки мирового уровня техники не позволяют использовать эту технику</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>Генерация дерева не завершена, нажмите, чтобы открыть ванильное дерево</Fluffy.ResearchTree.LoadingWait>
-  <Fluffy.ResearchTree.Anomaly>Исследование аномалий</Fluffy.ResearchTree.Anomaly>
 </LanguageData>

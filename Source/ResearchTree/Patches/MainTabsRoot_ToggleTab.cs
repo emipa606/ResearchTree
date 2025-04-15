@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using UnityEngine;
-using Verse;
 
 namespace FluffyResearchTree;
 
@@ -16,12 +15,6 @@ public class MainTabsRoot_ToggleTab
             return;
         }
 
-        if (ModsConfig.AnomalyActive && ((MainTabWindow_Research)MainButtonDefOf.Research.TabWindow).CurTab ==
-            ResearchTabDefOf.Anomaly)
-        {
-            return;
-        }
-
         if (Assets.BetterResearchTabLoaded)
         {
             newTab = Assets.BetterResearchTab;
@@ -32,14 +25,12 @@ public class MainTabsRoot_ToggleTab
             newTab = Assets.OrganizedResearchTab;
         }
 
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeDoNotGenerateResearchTree)
+        if (FluffyResearchTreeMod.instance.Settings.DoNotGenerateResearchTree() || !Tree.Instance.Initialized)
         {
             return;
         }
 
-        switch (FluffyResearchTreeMod.instance.Settings.OverrideResearch &&
-                (Tree.Initialized || FluffyResearchTreeMod.instance.Settings.LoadType !=
-                    Constants.LoadTypeLoadInBackground))
+        switch (FluffyResearchTreeMod.instance.Settings.OverrideResearch)
         {
             // LeftCtrl is the way of Dubs Mint Menus mod
             case true when

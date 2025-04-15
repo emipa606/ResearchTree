@@ -30,7 +30,6 @@
   <Fluffy.ResearchTree.StillLoading>El árbol se está cargando por primera vez, esto puede tardar un poco</Fluffy.ResearchTree.StillLoading>
   <Fluffy.ResearchTree.CurrentModVersion>Versión instalada del mod: {0}</Fluffy.ResearchTree.CurrentModVersion>
   <Fluffy.ResearchTree.PauseOnOpen>Pausar el juego al abrir el árbol de investigación</Fluffy.ResearchTree.PauseOnOpen>
-  <Fluffy.ResearchTree.VanillaGraphics>Usar los métodos gráficos antiguos (si parpadea)</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.LoadType>¿Cuándo debe generarse el árbol de investigación?</Fluffy.ResearchTree.LoadType>
   <Fluffy.ResearchTree.LoadTypeOne>Durante la carga del juego</Fluffy.ResearchTree.LoadTypeOne>
   <Fluffy.ResearchTree.LoadTypeTwo>Después de la carga del juego en segundo plano</Fluffy.ResearchTree.LoadTypeTwo>

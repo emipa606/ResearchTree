@@ -30,6 +30,6 @@ public class WindowStack_AdjustWindowsIfResolutionChanged
             treeWindow.Close();
         }
 
-        Tree.Reset(false);
+        Tree.Instance.Reset();
     }
 }

@@ -28,7 +28,6 @@
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>World Tech Level settings does not allow this tech</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>Grimworld study requirement not fulfilled, right click to show detailed info</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.SemiRandomResearchLoaded>Semi Random Research does not allow choosing research freely</Fluffy.ResearchTree.SemiRandomResearchLoaded>
-  <Fluffy.ResearchTree.Anomaly>Anomaly Research</Fluffy.ResearchTree.Anomaly>
   <Fluffy.ResearchTree.None>none</Fluffy.ResearchTree.None>
   <Fluffy.ResearchTree.Reset>Reset</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>Reset all settings</Fluffy.ResearchTree.ResetLabel>
@@ -38,7 +37,6 @@
   <Fluffy.ResearchTree.LoadingWait>Tree not finished generating, click to open vanilla tree</Fluffy.ResearchTree.LoadingWait>
   <Fluffy.ResearchTree.CurrentModVersion>Installed mod-version: {0}</Fluffy.ResearchTree.CurrentModVersion>
   <Fluffy.ResearchTree.PauseOnOpen>Pause game on opening research-tree</Fluffy.ResearchTree.PauseOnOpen>
-  <Fluffy.ResearchTree.VanillaGraphics>Use the old graphical methods (if flickering)</Fluffy.ResearchTree.VanillaGraphics>
   <Fluffy.ResearchTree.LoadType>When should the research-tree get generated?</Fluffy.ResearchTree.LoadType>
   <Fluffy.ResearchTree.LoadTypeOne>During game load</Fluffy.ResearchTree.LoadTypeOne>
   <Fluffy.ResearchTree.LoadTypeTwo>After game load in background</Fluffy.ResearchTree.LoadTypeTwo>

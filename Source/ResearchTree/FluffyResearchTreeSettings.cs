@@ -46,4 +46,9 @@ internal class FluffyResearchTreeSettings : ModSettings
         LoadType = Constants.LoadTypeLoadInBackground;
         BackgroundColor = new Color(0f, 0f, 0f, 0.1f);
     }
+    
+    public bool DoNotGenerateResearchTree()
+    {
+        return LoadType == Constants.LoadTypeDoNotGenerateResearchTree;
+    }
 }

@@ -35,8 +35,7 @@ public static class SemiRandomResearchProgressionFork_ButtonText
         var researchTab = MainButtonDefOf.Research;
         ((MainTabWindow_Research)MainButtonDefOf.Research.TabWindow).CurTab = ResearchTabDefOf.Main;
 
-        if (FluffyResearchTreeMod.instance.Settings.LoadType != Constants.LoadTypeDoNotGenerateResearchTree &&
-            Tree.Initialized)
+        if (Tree.Instance.Initialized)
         {
             switch (FluffyResearchTreeMod.instance.Settings.OverrideResearch)
             {

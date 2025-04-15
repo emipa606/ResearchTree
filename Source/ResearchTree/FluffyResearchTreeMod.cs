@@ -64,8 +64,7 @@ internal class FluffyResearchTreeMod : Mod
             Settings.LoadType = Constants.LoadTypeFirstTimeOpening;
         }
 
-        if (listing_Standard.RadioButton("Fluffy.ResearchTree.LoadTypeFour".Translate(),
-                Settings.LoadType == Constants.LoadTypeDoNotGenerateResearchTree))
+        if (listing_Standard.RadioButton("Fluffy.ResearchTree.LoadTypeFour".Translate(), Settings.DoNotGenerateResearchTree()))
         {
             Settings.LoadType = Constants.LoadTypeDoNotGenerateResearchTree;
             Settings.OverrideResearch = false;
@@ -91,7 +90,7 @@ internal class FluffyResearchTreeMod : Mod
         listing_Standard.Gap();
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.OverrideResearch".Translate(),
             ref Settings.OverrideResearch);
-        if (Settings.OverrideResearch && Settings.LoadType == Constants.LoadTypeDoNotGenerateResearchTree)
+        if (Settings.OverrideResearch && Settings.DoNotGenerateResearchTree())
         {
             Settings.LoadType = Constants.LoadTypeLoadInBackground;
         }

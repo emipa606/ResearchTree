@@ -170,11 +170,6 @@ public static class ResearchProjectDef_Extensions
 
     public static ResearchNode ResearchNode(this ResearchProjectDef research)
     {
-        if (IsAnomalyResearch(research))
-        {
-            return null;
-        }
-
         var researchNode = Tree.ResearchToNode(research) as ResearchNode;
         if (researchNode == null)
         {

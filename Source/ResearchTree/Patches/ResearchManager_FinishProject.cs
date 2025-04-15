@@ -20,7 +20,7 @@ public class ResearchManager_FinishProject
 
     private static void Postfix(ResearchProjectDef proj)
     {
-        if (proj == null || proj.IsAnomalyResearch())
+        if (proj == null)
         {
             return;
         }
