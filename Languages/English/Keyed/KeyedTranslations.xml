@@ -28,7 +28,6 @@
   <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>World Tech Level settings does not allow this tech</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>Grimworld study requirement not fulfilled, right click to show detailed info</Fluffy.ResearchTree.GrimworldDoesNotAllow>
   <Fluffy.ResearchTree.SemiRandomResearchLoaded>Semi Random Research does not allow choosing research freely</Fluffy.ResearchTree.SemiRandomResearchLoaded>
-  <Fluffy.ResearchTree.Anomaly>Anomaly Research</Fluffy.ResearchTree.Anomaly>
   <Fluffy.ResearchTree.None>none</Fluffy.ResearchTree.None>
   <Fluffy.ResearchTree.Reset>Reset</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>Reset all settings</Fluffy.ResearchTree.ResetLabel>
