@@ -1,0 +1,29 @@
+﻿<Analyzer>
+    <ResearchTree>
+        <Types>
+            <li>FluffyResearchTree.MainTabWindow_ResearchTree</li>
+            <li>FluffyResearchTree.Tree</li>
+            <li>FluffyResearchTree.Queue</li>
+            <li>FluffyResearchTree.Node</li>
+            <li>FluffyResearchTree.ResearchNode</li>
+            <li>FluffyResearchTree.Assets</li>
+            <li>FluffyResearchTree.Edge</li>
+            <li>FluffyResearchTree.DummyNode</li>
+        </Types>
+        <Methods>
+            <li>FluffyResearchTree.MainTabWindow_ResearchTree:DoWindowContents</li>
+            <li>FluffyResearchTree.MainTabWindow_ResearchTree:PreOpen</li>
+            <li>FluffyResearchTree.Tree:Init</li>
+            <li>FluffyResearchTree.Tree:CheckPrerequisites</li>
+            <li>FluffyResearchTree.Tree:CreateEdges</li>
+            <li>FluffyResearchTree.Tree:HorizontalPositions</li>
+            <li>FluffyResearchTree.Tree:NormalizeEdges</li>
+            <li>FluffyResearchTree.Tree:Collapse</li>
+            <li>FluffyResearchTree.Tree:MinimizeCrossings</li>
+            <li>FluffyResearchTree.Tree:MinimizeEdgeLength</li>
+            <li>FluffyResearchTree.Tree:RemoveEmptyRows</li>
+            <li>FluffyResearchTree.Tree:PopulateNodes</li>
+            <li>FluffyResearchTree.Tree:Draw</li>
+        </Methods>
+    </ResearchTree>
+</Analyzer>
