@@ -319,6 +319,14 @@ public static class Assets
             }
         }
 
+        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
+        {
+            StartLoadingWorker();
+        }
+    }
+
+    public static void InitializeTechLevelColorMappings()
+    {
         var relevantTechLevels = Tree.RelevantTechLevels;
         var count = relevantTechLevels.Count;
         for (var i = 0; i < count; i++)
@@ -327,13 +335,7 @@ public static class Assets
             ColorAvailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.33f, 0.33f);
             ColorUnavailable[relevantTechLevels[i]] = Color.HSVToRGB(1f / count * i, 0.125f, 0.33f);
         }
-
-        if (FluffyResearchTreeMod.instance.Settings.LoadType == Constants.LoadTypeLoadInBackground)
-        {
-            StartLoadingWorker();
-        }
     }
-
 
     public static void StartLoadingWorker()
     {

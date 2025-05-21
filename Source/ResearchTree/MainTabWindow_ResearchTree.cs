@@ -12,6 +12,9 @@ namespace FluffyResearchTree;
 
 public class MainTabWindow_ResearchTree : MainTabWindow
 {
+    public static readonly MainTabWindow_Research MainTabWindowResearchInstance =
+        (MainTabWindow_Research)MainButtonDefOf.Research.TabWindow;
+
     internal static Vector2 _scrollPosition = Vector2.zero;
 
     private static Rect _treeRect;

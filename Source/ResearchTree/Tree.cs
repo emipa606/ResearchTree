@@ -50,12 +50,27 @@ public static class Tree
     {
         get
         {
-            if (_relevantTechLevels == null)
+            if (_relevantTechLevels != null)
             {
-                _relevantTechLevels = (from TechLevel tl in Enum.GetValues(typeof(TechLevel))
-                    where DefDatabase<ResearchProjectDef>.AllDefsListForReading.Any(rp => rp.techLevel == tl)
-                    select tl).OrderBy(tl => tl).ToList();
+                return _relevantTechLevels;
             }
+            var inGaming = Current.Game != null;
+            List<ResearchProjectDef> visibleResearchProjects;
+            if (inGaming)
+            {
+                // clear cache
+                MainTabWindow_ResearchTree.MainTabWindowResearchInstance.cachedVisibleResearchProjects = null;
+                visibleResearchProjects = MainTabWindow_ResearchTree.MainTabWindowResearchInstance.VisibleResearchProjects;
+            }
+            else
+            {
+                visibleResearchProjects = DefDatabase<ResearchProjectDef>.AllDefsListForReading;
+            }
+            _relevantTechLevels = (from TechLevel tl in Enum.GetValues(typeof(TechLevel))
+                                   where visibleResearchProjects.Any(rp => rp.techLevel == tl)
+                                   select tl)
+                                  .OrderBy(tl => tl)
+                                  .ToList();
 
             return _relevantTechLevels;
         }
@@ -163,6 +178,8 @@ public static class Tree
                 MinimizeEdgeLength();
                 Logging.Message("RemoveEmptyRows");
                 RemoveEmptyRows();
+                Logging.Message("InitializeTechLevelColorMappings");
+                Assets.InitializeTechLevelColorMappings();
                 Logging.Message("Done");
                 Initialized = true;
             }
@@ -187,6 +204,8 @@ public static class Tree
         LongEventHandler.QueueLongEvent(MinimizeEdgeLength, "Fluffy.ResearchTree.PreparingTree.LayoutNew", false,
             null);
         LongEventHandler.QueueLongEvent(RemoveEmptyRows, "Fluffy.ResearchTree.PreparingTree.LayoutNew", false, null);
+        LongEventHandler.QueueLongEvent(Assets.InitializeTechLevelColorMappings,"Fluffy.ResearchTree.PreparingTree.LayoutNew", false,
+            null);
         LongEventHandler.QueueLongEvent(delegate
             {
                 Initialized = true;

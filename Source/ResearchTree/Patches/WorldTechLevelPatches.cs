@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using HarmonyLib;
 using Verse;
 
@@ -27,7 +27,7 @@ public static class WorldTechLevelPatches
 
     private static MethodBase TargetMethod()
     {
-        return AccessTools.PropertySetter("WorldTechLevel.GameComponent_TechLevel:WorldTechLevel");
+        return AccessTools.PropertySetter("WorldTechLevel.WorldTechLevel:Current");
     }
 
     public static void Postfix()

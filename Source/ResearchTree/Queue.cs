@@ -17,9 +17,6 @@ public class Queue : WorldComponent
 
     private static Vector2 _sideScrollPosition = Vector2.zero;
 
-    private static readonly MainTabWindow_Research MainTabWindowResearchInstance =
-        (MainTabWindow_Research)MainButtonDefOf.Research.TabWindow;
-
     public static ResearchNode _draggedNode;
 
     private readonly List<ResearchNode> _queue = [];
@@ -478,7 +475,7 @@ public class Queue : WorldComponent
         }
 
         // to begin
-        MainTabWindowResearchInstance.AttemptBeginResearch(projectToStart);
+        MainTabWindow_ResearchTree.MainTabWindowResearchInstance.AttemptBeginResearch(projectToStart);
         FocusStartedProject(projectToStart);
     }
 
@@ -486,7 +483,7 @@ public class Queue : WorldComponent
     {
         // focus the start project 
         Find.ResearchManager.SetCurrentProject(projectToStart);
-        MainTabWindowResearchInstance.Select(projectToStart);
+        MainTabWindow_ResearchTree.MainTabWindowResearchInstance.Select(projectToStart);
     }
 
     private static void DoFinishResearchProject(ResearchProjectDef projectToFinish)
