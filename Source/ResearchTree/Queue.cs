@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -15,13 +13,9 @@ namespace FluffyResearchTree;
 
 public class Queue : WorldComponent
 {
-    private static Queue _instance;
+    public static Queue Instance;
 
     private static Vector2 _sideScrollPosition = Vector2.zero;
-
-    private static readonly MethodInfo AttemptBeginResearchMethodInfo =
-        AccessTools.Method(typeof(MainTabWindow_Research), nameof(MainTabWindow_Research.AttemptBeginResearch),
-            [typeof(ResearchProjectDef)]);
 
     private static readonly MainTabWindow_Research MainTabWindowResearchInstance =
         (MainTabWindow_Research)MainButtonDefOf.Research.TabWindow;
@@ -34,29 +28,34 @@ public class Queue : WorldComponent
 
     public Queue(World world) : base(world)
     {
-        _instance = this;
+        Instance = this;
+    }
+
+    public void Clear()
+    {
+        _queue.Clear();
     }
 
     public static ResearchNode Pop
     {
         get
         {
-            if (_instance._queue is not { Count: > 0 })
+            if (Instance._queue is not { Count: > 0 })
             {
                 return null;
             }
 
-            var result = _instance._queue[0];
-            _instance._queue.RemoveAt(0);
+            var result = Instance._queue[0];
+            Instance._queue.RemoveAt(0);
             return result;
         }
     }
 
-    public static int NumQueued => _instance._queue.Count;
+    public static int NumQueued => Instance._queue.Count;
 
     public static void TryDequeue(ResearchNode node)
     {
-        if (_instance._queue.Contains(node))
+        if (Instance._queue.Contains(node))
         {
             Dequeue(node);
         }
@@ -65,24 +64,24 @@ public class Queue : WorldComponent
     private static void Dequeue(ResearchNode node)
     {
         var removeFirst = false;
-        var indexOf = _instance._queue.IndexOf(node);
+        var indexOf = Instance._queue.IndexOf(node);
         if (indexOf >= 0)
         {
-            _instance._queue.RemoveAt(indexOf);
+            Instance._queue.RemoveAt(indexOf);
             removeFirst = indexOf == 0;
         }
 
         node.QueueRect = Rect.zero;
-        foreach (var item in _instance._queue.Where(n => n.GetMissingRequiredRecursive().Contains(node)).ToList())
+        foreach (var item in Instance._queue.Where(n => n.GetMissingRequiredRecursive().Contains(node)).ToList())
         {
-            indexOf = _instance._queue.IndexOf(item);
+            indexOf = Instance._queue.IndexOf(item);
             if (indexOf < 0)
             {
                 continue;
             }
 
             item.QueueRect = Rect.zero;
-            _instance._queue.RemoveAt(indexOf);
+            Instance._queue.RemoveAt(indexOf);
             if (!removeFirst && indexOf == 0)
             {
                 removeFirst = true;
@@ -112,13 +111,13 @@ public class Queue : WorldComponent
 
         if (!add)
         {
-            _instance._queue.Clear();
+            Instance._queue.Clear();
             Find.ResearchManager.currentProj = null;
         }
 
-        if (!_instance._queue.Contains(node))
+        if (!Instance._queue.Contains(node))
         {
-            _instance._queue.Add(node);
+            Instance._queue.Add(node);
         }
     }
 
@@ -129,19 +128,19 @@ public class Queue : WorldComponent
             return;
         }
 
-        if (!_instance._queue.Contains(node))
+        if (!Instance._queue.Contains(node))
         {
-            _instance._queue.Insert(0, node);
+            Instance._queue.Insert(0, node);
             return;
         }
 
-        var index = _instance._queue.IndexOf(node);
+        var index = Instance._queue.IndexOf(node);
         for (var i = index; i > 0; i--)
         {
-            _instance._queue[i] = _instance._queue[i - 1];
+            Instance._queue[i] = Instance._queue[i - 1];
         }
 
-        _instance._queue[0] = node;
+        Instance._queue[0] = node;
     }
 
     public static void EnqueueRangeFirst(IEnumerable<ResearchNode> nodes)
@@ -153,14 +152,14 @@ public class Queue : WorldComponent
             return;
         }
 
-        var current = _instance._queue.FirstOrDefault();
+        var current = Instance._queue.FirstOrDefault();
         researchOrder.Reverse();
         foreach (var item in researchOrder)
         {
             ReEnqueue(item);
         }
 
-        if (current != _instance._queue.FirstOrDefault())
+        if (current != Instance._queue.FirstOrDefault())
         {
             AttemptBeginResearch();
         }
@@ -199,12 +198,12 @@ public class Queue : WorldComponent
             ? nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent).ToList()
             : nodes.ToList();
 
-        if (researchOrder.Count > _instance._queue.Count)
+        if (researchOrder.Count > Instance._queue.Count)
         {
             return false;
         }
 
-        var sameOrder = !researchOrder.Where((t, i) => t != _instance._queue[i]).Any();
+        var sameOrder = !researchOrder.Where((t, i) => t != Instance._queue[i]).Any();
 
         if (!sameOrder)
         {
@@ -224,11 +223,11 @@ public class Queue : WorldComponent
     {
         if (!add)
         {
-            _instance._queue.Clear();
+            Instance._queue.Clear();
             Find.ResearchManager.currentProj = null;
         }
 
-        var firstEnqueue = _instance._queue.Empty();
+        var firstEnqueue = Instance._queue.Empty();
         foreach (var item in nodes.OrderBy(node => node.X).ThenBy(node => node.Research.CostApparent))
         {
             Enqueue(item, true);
@@ -244,7 +243,7 @@ public class Queue : WorldComponent
 
     public static bool IsQueued(ResearchNode node)
     {
-        return _instance._queue.Contains(node) && !node.Research.IsAnomalyResearch();
+        return Instance._queue.Contains(node) && !node.Research.IsAnomalyResearch();
     }
 
     public static void TryStartNext(ResearchProjectDef finished)
@@ -256,7 +255,7 @@ public class Queue : WorldComponent
         }
 
         TryDequeue(finished.ResearchNode());
-        var current = _instance._queue.FirstOrDefault();
+        var current = Instance._queue.FirstOrDefault();
         AttemptBeginResearch();
         AttemptDoCompletionLetter(finished, current?.Research);
     }
@@ -306,7 +305,7 @@ public class Queue : WorldComponent
     public static void DrawLabels(Rect visibleRect)
     {
         var num = 1;
-        foreach (var item in _instance._queue)
+        foreach (var item in Instance._queue)
         {
             var rect = new Rect(item.Rect.xMax - (Constants.QueueLabelSize / 2f),
                 item.Rect.yMin + ((item.Rect.height - Constants.QueueLabelSize) / 2f),
@@ -367,7 +366,7 @@ public class Queue : WorldComponent
                 Constants.SmallQueueLabelSize,
                 Constants.SmallQueueLabelSize),
             Color.white,
-            Color.grey, _instance._queue.IndexOf(researchNode) + 1 + "");
+            Color.grey, Instance._queue.IndexOf(researchNode) + 1 + "");
     }
 
     private static void DrawLabel(Rect canvas, Color main, Color background, string label)
@@ -395,7 +394,7 @@ public class Queue : WorldComponent
 
     public static void DrawQueue(Rect canvas, bool interactible)
     {
-        if (!_instance._queue.Any())
+        if (!Instance._queue.Any())
         {
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = Assets.TechLevelColor;
@@ -406,7 +405,7 @@ public class Queue : WorldComponent
         }
 
         var scrollContentRect = canvas;
-        scrollContentRect.width = _instance._queue.Count * (Constants.NodeSize.x + Constants.Margin);
+        scrollContentRect.width = Instance._queue.Count * (Constants.NodeSize.x + Constants.Margin);
         scrollContentRect.height -= 20;
         scrollContentRect.x = 0;
         scrollContentRect.y = 0;
@@ -415,9 +414,9 @@ public class Queue : WorldComponent
         HandleMouseDown();
         var min = scrollContentRect.min;
         // ReSharper disable once ForCanBeConvertedToForeach
-        for (var index = 0; index < _instance._queue.Count; index++)
+        for (var index = 0; index < Instance._queue.Count; index++)
         {
-            var node = _instance._queue[index];
+            var node = Instance._queue[index];
             if (node == _draggedNode)
             {
                 continue;
@@ -447,7 +446,7 @@ public class Queue : WorldComponent
 
     public static void Notify_InstantFinished(ResearchNode node)
     {
-        foreach (var item in new List<ResearchNode>(_instance._queue)
+        foreach (var item in new List<ResearchNode>(Instance._queue)
                      .Where(item => item.Research.IsFinished))
         {
             TryDequeue(item);
@@ -463,7 +462,7 @@ public class Queue : WorldComponent
             return;
         }
 
-        if (!_instance._queue.Any())
+        if (!Instance._queue.Any())
         {
             Enqueue(Find.ResearchManager.currentProj.ResearchNode(), true);
         }
@@ -471,7 +470,7 @@ public class Queue : WorldComponent
 
     private static void AttemptBeginResearch()
     {
-        var node = _instance._queue.FirstOrDefault();
+        var node = Instance._queue.FirstOrDefault();
         var projectToStart = node?.Research;
         if (projectToStart is not { CanStartNow: true } || projectToStart.IsFinished)
         {
@@ -479,7 +478,7 @@ public class Queue : WorldComponent
         }
 
         // to begin
-        AttemptBeginResearchMethodInfo.Invoke(MainTabWindowResearchInstance, [projectToStart]);
+        MainTabWindowResearchInstance.AttemptBeginResearch(projectToStart);
         FocusStartedProject(projectToStart);
     }
 
@@ -519,17 +518,17 @@ public class Queue : WorldComponent
             return;
         }
 
-        var current = _instance._queue.FirstOrDefault();
+        var current = Instance._queue.FirstOrDefault();
         var dropPosition = Event.current.mousePosition;
-        var node = _instance._queue
+        var node = Instance._queue
             .OrderBy(item => Mathf.Abs(item.QueueRect.center.x - dropPosition.x))
             .First();
 
-        var index = _instance._queue.IndexOf(node);
+        var index = Instance._queue.IndexOf(node);
         var nodeCenterX = node.QueueRect.center.x;
-        var queueCount = _instance._queue.Count;
+        var queueCount = Instance._queue.Count;
         index = dropPosition.x <= nodeCenterX ? Mathf.Max(0, index) : Mathf.Min(index + 1, queueCount);
-        var originIndex = _instance._queue.IndexOf(researchNode);
+        var originIndex = Instance._queue.IndexOf(researchNode);
         if (index - 1 == originIndex)
         {
             // a magic code. Used to prevent subsequent left click events(ResearchNode.cs#L529-L539).
@@ -540,20 +539,20 @@ public class Queue : WorldComponent
 
         if (index == queueCount)
         {
-            _instance._queue.Add(researchNode);
+            Instance._queue.Add(researchNode);
         }
         else
         {
-            _instance._queue.Insert(index, researchNode);
+            Instance._queue.Insert(index, researchNode);
         }
 
         if (index < originIndex)
         {
-            _instance._queue.RemoveAt(originIndex + 1);
+            Instance._queue.RemoveAt(originIndex + 1);
         }
         else
         {
-            _instance._queue.RemoveAt(originIndex);
+            Instance._queue.RemoveAt(originIndex);
         }
 
         SortRequiredRecursive(researchNode);
@@ -569,8 +568,8 @@ public class Queue : WorldComponent
 
         UpdateNodeQueueRect();
 
-        var insertedIndex = _instance._queue.IndexOf(researchNode);
-        var newCurrent = _instance._queue.FirstOrDefault();
+        var insertedIndex = Instance._queue.IndexOf(researchNode);
+        var newCurrent = Instance._queue.FirstOrDefault();
 
         if (current != newCurrent && Input.GetMouseButtonUp(0) && insertedIndex != originIndex)
         {
@@ -583,12 +582,12 @@ public class Queue : WorldComponent
 
     private static void SortRequiredRecursive(ResearchNode researchNode)
     {
-        var index = _instance._queue.IndexOf(researchNode);
+        var index = Instance._queue.IndexOf(researchNode);
         foreach (var research in researchNode.GetMissingRequiredRecursive()
-                     .Where(research => IsQueued(research) && _instance._queue.IndexOf(research) > index))
+                     .Where(research => IsQueued(research) && Instance._queue.IndexOf(research) > index))
         {
-            _instance._queue.Remove(research);
-            _instance._queue.Insert(index, research);
+            Instance._queue.Remove(research);
+            Instance._queue.Insert(index, research);
             SortRequiredRecursive(research);
         }
     }
@@ -596,7 +595,7 @@ public class Queue : WorldComponent
     private static void UpdateNodeQueueRect()
     {
         var vector2 = new Vector2(Constants.Margin, Constants.Margin);
-        foreach (var researchNode in _instance._queue)
+        foreach (var researchNode in Instance._queue)
         {
             var rect = new Rect(vector2.x - Constants.Margin,
                 vector2.y - Constants.Margin,
@@ -616,7 +615,7 @@ public class Queue : WorldComponent
             return;
         }
 
-        _draggedNode = Enumerable.FirstOrDefault(_instance._queue,
+        _draggedNode = Enumerable.FirstOrDefault(Instance._queue,
             node => node.QueueRect.Contains(Event.current.mousePosition));
     }
 

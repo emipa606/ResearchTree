@@ -62,7 +62,6 @@ Bitte verwenden Sie die Option "Beim ersten Öffnen laden", wenn Sie dieses Prob
   <Fluffy.ResearchTree.BackgroundColor>Hintergrundfarbe</Fluffy.ResearchTree.BackgroundColor>
   <Fluffy.ResearchTree.LClickRemoveFromQueue>Umschalt-Klick zum Entfernen aus der Warteschlange</Fluffy.ResearchTree.LClickRemoveFromQueue>
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>Grimworld-Studienanforderung nicht erfüllt, Rechtsklick zur Anzeige detaillierter Informationen</Fluffy.ResearchTree.GrimworldDoesNotAllow>
-  <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>Die World Tech Level-Einstellungen erlauben diese Technologie nicht</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>Baum nicht fertig generiert, klicken Sie, um den Vanille-Baum zu öffnen</Fluffy.ResearchTree.LoadingWait>
   <Fluffy.ResearchTree.Anomaly>Anomalieforschung</Fluffy.ResearchTree.Anomaly>
 </LanguageData>

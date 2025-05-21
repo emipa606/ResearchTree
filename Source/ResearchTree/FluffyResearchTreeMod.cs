@@ -14,6 +14,8 @@ internal class FluffyResearchTreeMod : Mod
     /// </summary>
     public static FluffyResearchTreeMod instance;
 
+    public static Harmony Harmony;
+
     private static string currentVersion;
 
     //public static Thread initializeWorker;
@@ -25,7 +27,8 @@ internal class FluffyResearchTreeMod : Mod
     public FluffyResearchTreeMod(ModContentPack content) : base(content)
     {
         instance = this;
-        new Harmony("Fluffy.ResearchTree").PatchAll(Assembly.GetExecutingAssembly());
+        Harmony = new Harmony("Fluffy.ResearchTree");
+        Harmony.PatchAll(Assembly.GetExecutingAssembly());
         Settings = GetSettings<FluffyResearchTreeSettings>();
         currentVersion = VersionFromManifest.GetVersionFromModMetaData(content.ModMetaData);
     }

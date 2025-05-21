@@ -51,15 +51,9 @@ public static class Assets
 
     public static readonly bool UsingMedievalOverhaul;
 
-    public static readonly bool UsingWorldTechLevel;
-
     public static readonly bool UsingGrimworld;
 
     public static TechLevel CachedWorldTechLevel;
-
-    public static readonly MethodInfo WorldTechLevelEnabledMethod;
-
-    public static readonly MethodInfo WorldTechLevelFilterLevelMethod;
 
     public static readonly MethodInfo MedievalOverhaulPostfixMethod;
 
@@ -232,32 +226,6 @@ public static class Assets
         UsingMinimap =
             ModLister.GetActiveModWithIdentifier("dubwise.dubsmintminimap") != null;
 
-        UsingWorldTechLevel =
-            ModLister.GetActiveModWithIdentifier("m00nl1ght.WorldTechLevel") != null;
-
-        if (UsingWorldTechLevel)
-        {
-            WorldTechLevelEnabledMethod =
-                AccessTools.Method("WorldTechLevel.Patches.Patch_MainTabWindow_Research:IsFilterEnabled");
-            if (WorldTechLevelEnabledMethod == null)
-            {
-                Logging.Warning(
-                    "Failed to find the Patch_MainTabWindow_Research-IsFilterEnabled-method in WorldTechLevel. Will not be able to show or block research based on their extra requirements.");
-                UsingWorldTechLevel = false;
-            }
-            else
-            {
-                WorldTechLevelFilterLevelMethod =
-                    AccessTools.Method("WorldTechLevel.TechLevelUtility:PlayerResearchFilterLevel");
-                if (WorldTechLevelFilterLevelMethod == null)
-                {
-                    Logging.Warning(
-                        "Failed to find the TechLevelUtility-PlayerResearchFilterLevel-method in WorldTechLevel. Will not be able to show or block research based on their extra requirements.");
-                    UsingWorldTechLevel = false;
-                }
-            }
-        }
-
         UsingMedievalOverhaul =
             ModLister.GetActiveModWithIdentifier("DankPyon.Medieval.Overhaul") != null;
 
@@ -424,26 +392,6 @@ public static class Assets
 
         thingLabel = thingDef.LabelCap;
         return true;
-    }
-
-    public static bool IsBlockedByWorldTechLevel(ResearchProjectDef researchProject)
-    {
-        if (!UsingWorldTechLevel)
-        {
-            return false;
-        }
-
-        if (!(bool)WorldTechLevelEnabledMethod.Invoke(null, null))
-        {
-            return false;
-        }
-
-        if (CachedWorldTechLevel == TechLevel.Undefined)
-        {
-            CachedWorldTechLevel = (TechLevel)WorldTechLevelFilterLevelMethod.Invoke(null, null);
-        }
-
-        return researchProject.techLevel > CachedWorldTechLevel;
     }
 
     public static bool IsBlockedByGrimworld(ResearchProjectDef researchProject)

@@ -205,12 +205,6 @@ public class ResearchNode : Node
             return availableCache;
         }
 
-        if (Assets.IsBlockedByWorldTechLevel(Research))
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
         if (Assets.IsBlockedByMedievalOverhaul(Research))
         {
             availableCache = false;
@@ -661,12 +655,6 @@ public class ResearchNode : Node
         {
             tooltipstring.AppendLine();
             tooltipstring.AppendLine("Fluffy.ResearchTree.GrimworldDoesNotAllow".Translate());
-        }
-
-        if (Assets.IsBlockedByWorldTechLevel(Research))
-        {
-            tooltipstring.AppendLine();
-            tooltipstring.AppendLine("Fluffy.ResearchTree.WorldTechLevelDoesNotAllow".Translate());
         }
 
         if (Assets.IsBlockedByMedievalOverhaul(Research))

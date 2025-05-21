@@ -61,7 +61,6 @@
   <Fluffy.ResearchTree.BackgroundColor>Цвет фона</Fluffy.ResearchTree.BackgroundColor>
   <Fluffy.ResearchTree.LClickRemoveFromQueue>Нажмите Shift, чтобы удалить из очереди</Fluffy.ResearchTree.LClickRemoveFromQueue>
   <Fluffy.ResearchTree.GrimworldDoesNotAllow>Требование изучения Grimworld не выполнено, щелкните правой кнопкой мыши, чтобы показать подробную информацию</Fluffy.ResearchTree.GrimworldDoesNotAllow>
-  <Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>Настройки мирового уровня техники не позволяют использовать эту технику</Fluffy.ResearchTree.WorldTechLevelDoesNotAllow>
   <Fluffy.ResearchTree.LoadingWait>Генерация дерева не завершена, нажмите, чтобы открыть ванильное дерево</Fluffy.ResearchTree.LoadingWait>
   <Fluffy.ResearchTree.Anomaly>Исследование аномалий</Fluffy.ResearchTree.Anomaly>
 </LanguageData>

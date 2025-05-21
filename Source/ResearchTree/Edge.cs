@@ -65,7 +65,7 @@ public class Edge<T1, T2> where T1 : Node where T2 : Node
 
     public void Draw(Rect visibleRect)
     {
-        if (!In.IsVisible(visibleRect) && !Out.IsVisible(visibleRect))
+        if (!ShouldDrawEdge(visibleRect))
         {
             return;
         }
@@ -119,6 +119,22 @@ public class Edge<T1, T2> where T1 : Node where T2 : Node
             FastGUI.DrawTextureFast(new Rect(left.x, left.y - 2f, Constants.NodeSize.x, 4f), Assets.Lines.EW,
                 Out.EdgeColor);
         }
+    }
+
+    private bool ShouldDrawEdge(Rect visibleRect)
+    {
+        return GetEdgeInNode()?.IsVisible(visibleRect) == true &&
+               GetEdgeOutNode()?.IsVisible(visibleRect) == true;
+    }
+
+    private Node GetEdgeInNode()
+    {
+        return In is DummyNode d ? d.Parent : In;
+    }
+
+    private Node GetEdgeOutNode()
+    {
+        return Out is DummyNode d ? d.Child : Out;
     }
 
     public override string ToString()
