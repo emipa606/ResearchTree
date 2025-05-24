@@ -45,4 +45,6 @@ public class DummyNode : Node
     public override Color Color => OutNodes.FirstOrDefault()?.Color ?? Color.white;
 
     public override Color EdgeColor => OutNodes.FirstOrDefault()?.EdgeColor ?? Color.white;
+
+    public override bool IsVisible => OutNodes.FirstOrDefault()?.IsVisible ?? false;
 }

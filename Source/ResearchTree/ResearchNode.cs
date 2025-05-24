@@ -205,12 +205,6 @@ public class ResearchNode : Node
             return availableCache;
         }
 
-        if (Assets.IsBlockedByWorldTechLevel(Research))
-        {
-            availableCache = false;
-            return availableCache;
-        }
-
         if (Assets.IsBlockedByMedievalOverhaul(Research))
         {
             availableCache = false;
@@ -372,14 +366,11 @@ public class ResearchNode : Node
         return BuildingPresent(Research);
     }
 
-    public override bool IsVisible(Rect visibleRect)
-    {
-        return base.IsVisible(visibleRect) && !Assets.IsBlockedBySOS2(Research);
-    }
+    public override bool IsVisible => !Assets.IsBlockedBySOS2(Research) && !Assets.IsBlockedByWorldTechLevel(Research);
 
     public override void Draw(Rect visibleRect, bool forceDetailedMode = false)
     {
-        if (!IsVisible(visibleRect))
+        if (!IsWithinViewport(visibleRect) || !IsVisible)
         {
             Highlighted = false;
             return;
@@ -661,12 +652,6 @@ public class ResearchNode : Node
         {
             tooltipstring.AppendLine();
             tooltipstring.AppendLine("Fluffy.ResearchTree.GrimworldDoesNotAllow".Translate());
-        }
-
-        if (Assets.IsBlockedByWorldTechLevel(Research))
-        {
-            tooltipstring.AppendLine();
-            tooltipstring.AppendLine("Fluffy.ResearchTree.WorldTechLevelDoesNotAllow".Translate());
         }
 
         if (Assets.IsBlockedByMedievalOverhaul(Research))

@@ -154,7 +154,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
     public override void PreOpen()
     {
         base.PreOpen();
-        Assets.CachedWorldTechLevel = TechLevel.Undefined;
         SetRects();
         Tree.WaitForInitialization();
         Assets.RefreshResearch = true;

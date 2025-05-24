@@ -55,11 +55,9 @@ public static class Assets
 
     public static readonly bool UsingGrimworld;
 
-    public static TechLevel CachedWorldTechLevel;
+    public static readonly MethodInfo WorldTechLevelProjectVisibleMethod;
 
-    public static readonly MethodInfo WorldTechLevelEnabledMethod;
-
-    public static readonly MethodInfo WorldTechLevelFilterLevelMethod;
+    public static readonly MethodInfo WorldTechLevelSectionVisibleMethod;
 
     public static readonly MethodInfo MedievalOverhaulPostfixMethod;
 
@@ -237,22 +235,22 @@ public static class Assets
 
         if (UsingWorldTechLevel)
         {
-            WorldTechLevelEnabledMethod =
-                AccessTools.Method("WorldTechLevel.Patches.Patch_MainTabWindow_Research:IsFilterEnabled");
-            if (WorldTechLevelEnabledMethod == null)
+            WorldTechLevelProjectVisibleMethod =
+                AccessTools.Method("WorldTechLevel.ResearchUtility:ShouldProjectBeVisible");
+            if (WorldTechLevelProjectVisibleMethod == null)
             {
                 Logging.Warning(
-                    "Failed to find the Patch_MainTabWindow_Research-IsFilterEnabled-method in WorldTechLevel. Will not be able to show or block research based on their extra requirements.");
+                    "Failed to find the ResearchUtility-ShouldProjectBeVisible-method in WorldTechLevel. Will not be able to hide research based on their extra requirements.");
                 UsingWorldTechLevel = false;
             }
             else
             {
-                WorldTechLevelFilterLevelMethod =
-                    AccessTools.Method("WorldTechLevel.TechLevelUtility:PlayerResearchFilterLevel");
-                if (WorldTechLevelFilterLevelMethod == null)
+                WorldTechLevelSectionVisibleMethod =
+                    AccessTools.Method("WorldTechLevel.ResearchUtility:ShouldSectionBeVisible");
+                if (WorldTechLevelSectionVisibleMethod == null)
                 {
                     Logging.Warning(
-                        "Failed to find the TechLevelUtility-PlayerResearchFilterLevel-method in WorldTechLevel. Will not be able to show or block research based on their extra requirements.");
+                        "Failed to find the ResearchUtility-ShouldSectionBeVisible-method in WorldTechLevel. Will not be able to hide research based on their extra requirements.");
                     UsingWorldTechLevel = false;
                 }
             }
@@ -433,17 +431,17 @@ public static class Assets
             return false;
         }
 
-        if (!(bool)WorldTechLevelEnabledMethod.Invoke(null, null))
+        return !(bool)WorldTechLevelProjectVisibleMethod.Invoke(null, [researchProject]);
+    }
+
+    public static bool IsBlockedByWorldTechLevel(TechLevel techLevel)
+    {
+        if (!UsingWorldTechLevel)
         {
             return false;
         }
 
-        if (CachedWorldTechLevel == TechLevel.Undefined)
-        {
-            CachedWorldTechLevel = (TechLevel)WorldTechLevelFilterLevelMethod.Invoke(null, null);
-        }
-
-        return researchProject.techLevel > CachedWorldTechLevel;
+        return !(bool)WorldTechLevelSectionVisibleMethod.Invoke(null, [techLevel]);
     }
 
     public static bool IsBlockedByGrimworld(ResearchProjectDef researchProject)

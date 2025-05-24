@@ -335,7 +335,7 @@ public class Node
         _rectsSet = true;
     }
 
-    public virtual bool IsVisible(Rect visibleRect)
+    public virtual bool IsWithinViewport(Rect visibleRect)
     {
         if (!(Rect.xMin > visibleRect.xMax) && !(Rect.xMax < visibleRect.xMin) && !(Rect.yMin > visibleRect.yMax))
         {
@@ -344,6 +344,8 @@ public class Node
 
         return false;
     }
+
+    public virtual bool IsVisible => true;
 
     public virtual void Draw(Rect visibleRect, bool forceDetailedMode = false)
     {
