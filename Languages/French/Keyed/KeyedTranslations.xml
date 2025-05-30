@@ -55,6 +55,7 @@ Veuillez utiliser l'option de chargement à la première ouverture si vous renco
   <Fluffy.ResearchTree.VerboseLogging>Journalisation verbeuse</Fluffy.ResearchTree.VerboseLogging>
   <Fluffy.ResearchTree.NoIdeologyPopup>Ne pas montrer le mème manquant - avertissement</Fluffy.ResearchTree.NoIdeologyPopup>
   <Fluffy.ResearchTree.NoIdeologyPopupTT>Lors de la sélection d'une recherche, la fenêtre contextuelle avertissant qu'elle débloquera des objets que votre idéologie actuelle n'autorise pas ne s'affichera pas.</Fluffy.ResearchTree.NoIdeologyPopupTT>
+  <Fluffy.ResearchTree.HideNodesBlockedByTechLevel>Cacher la recherche qui est bloquée par des restrictions de niveau technologique</Fluffy.ResearchTree.HideNodesBlockedByTechLevel>
   <Fluffy.ResearchTree.SemiRandomResearchLoaded>La recherche semi-aléatoire ne permet pas de choisir librement la recherche.</Fluffy.ResearchTree.SemiRandomResearchLoaded>
   <Fluffy.ResearchTree.Reset>Remise à zéro</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>Réinitialiser tous les paramètres</Fluffy.ResearchTree.ResetLabel>

@@ -312,7 +312,7 @@ public class Queue : WorldComponent
                 item.Rect.yMin + ((item.Rect.height - Constants.QueueLabelSize) / 2f),
                 Constants.QueueLabelSize,
                 Constants.QueueLabelSize);
-            if (item.IsVisible(visibleRect))
+            if (item.IsWithinViewport(visibleRect) && item.IsVisible)
             {
                 var color = Assets.ColorCompleted[item.Research.techLevel];
                 var background = num > 1 ? Assets.ColorUnavailable[item.Research.techLevel] : color;
@@ -467,6 +467,10 @@ public class Queue : WorldComponent
         {
             Enqueue(Find.ResearchManager.currentProj.ResearchNode(), true);
         }
+
+        // In case restrictions have changed, remove any projects
+        // from the queue that are no longer visible in the tree
+        _instance._queue.RemoveAll(n => !n.IsVisible);
     }
 
     private static void AttemptBeginResearch()

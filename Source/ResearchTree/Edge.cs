@@ -65,7 +65,12 @@ public class Edge<T1, T2> where T1 : Node where T2 : Node
 
     public void Draw(Rect visibleRect)
     {
-        if (!In.IsVisible(visibleRect) && !Out.IsVisible(visibleRect))
+        if (!In.IsWithinViewport(visibleRect) && !Out.IsWithinViewport(visibleRect))
+        {
+            return;
+        }
+
+        if (!In.IsVisible || !Out.IsVisible)
         {
             return;
         }

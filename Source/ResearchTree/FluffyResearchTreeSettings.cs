@@ -12,6 +12,7 @@ internal class FluffyResearchTreeSettings : ModSettings
     public bool CtrlFunction = true;
     public int LoadType = Constants.LoadTypeLoadInBackground;
     public bool NoIdeologyPopup;
+    public bool HideNodesBlockedByTechLevel = true;
     public bool OverrideResearch = true;
     public bool PauseOnOpen = true;
 
@@ -30,6 +31,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         Scribe_Values.Look(ref OverrideResearch, "OverrideResearch", true);
         Scribe_Values.Look(ref ShowCompletion, "ShowCompletion");
         Scribe_Values.Look(ref NoIdeologyPopup, "NoIdeologyPopup");
+        Scribe_Values.Look(ref HideNodesBlockedByTechLevel, "HideNodesBlockedByTechLevel", true);
         Scribe_Values.Look(ref VerboseLogging, "VerboseLogging");
         Scribe_Values.Look(ref LoadType, "LoadType", 1);
         Scribe_Values.Look(ref BackgroundColor, "BackgroundColor", new Color(0f, 0f, 0f, 0.1f));
@@ -42,6 +44,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         OverrideResearch = true;
         ShowCompletion = false;
         NoIdeologyPopup = false;
+        HideNodesBlockedByTechLevel = true;
         VerboseLogging = false;
         LoadType = Constants.LoadTypeLoadInBackground;
         BackgroundColor = new Color(0f, 0f, 0f, 0.1f);

@@ -158,7 +158,7 @@ public class ResearchNode : Node
             return availableCache;
         }
 
-        if (Assets.UsingRimedieval && !Assets.AllowedResearchDefs.Contains(Research))
+        if (Assets.UsingRimedieval && !Assets.RimedievalAllowedResearchDefs.Contains(Research))
         {
             availableCache = false;
             return availableCache;
@@ -372,14 +372,11 @@ public class ResearchNode : Node
         return BuildingPresent(Research);
     }
 
-    public override bool IsVisible(Rect visibleRect)
-    {
-        return base.IsVisible(visibleRect) && !Assets.IsBlockedBySOS2(Research);
-    }
+    public override bool IsVisible => !Assets.IsBlockedBySOS2(Research) && !Assets.IsHiddenByTechLevelRestrictions(Research);
 
     public override void Draw(Rect visibleRect, bool forceDetailedMode = false)
     {
-        if (!IsVisible(visibleRect))
+        if (!IsWithinViewport(visibleRect) || !IsVisible)
         {
             Highlighted = false;
             return;
@@ -688,7 +685,7 @@ public class ResearchNode : Node
             tooltipstring.AppendLine("Fluffy.ResearchTree.SemiRandomResearchLoaded".Translate());
         }
 
-        if (Assets.UsingRimedieval && !Assets.AllowedResearchDefs.Contains(Research))
+        if (Assets.UsingRimedieval && !Assets.RimedievalAllowedResearchDefs.Contains(Research))
         {
             tooltipstring.AppendLine();
             tooltipstring.AppendLine("Fluffy.ResearchTree.RimedievalDoesNotAllow".Translate());

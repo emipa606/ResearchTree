@@ -55,6 +55,7 @@
   <Fluffy.ResearchTree.VerboseLogging>Ведение подробного журнала</Fluffy.ResearchTree.VerboseLogging>
   <Fluffy.ResearchTree.NoIdeologyPopup>Не показывать отсутствующий мем-предупреждение</Fluffy.ResearchTree.NoIdeologyPopup>
   <Fluffy.ResearchTree.NoIdeologyPopupTT>При выборе исследования всплывающее предупреждение о том, что оно разблокирует предметы, которые ваша текущая идеология не разрешает, не будет отображаться</Fluffy.ResearchTree.NoIdeologyPopupTT>
+  <Fluffy.ResearchTree.HideNodesBlockedByTechLevel>Скрыть исследования, которые блокируются ограничениями технического уровня</Fluffy.ResearchTree.HideNodesBlockedByTechLevel>
   <Fluffy.ResearchTree.SemiRandomResearchLoaded>Полуслучайные исследования не позволяют свободно выбирать исследования</Fluffy.ResearchTree.SemiRandomResearchLoaded>
   <Fluffy.ResearchTree.Reset>Сброс</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>Сброс всех настроек</Fluffy.ResearchTree.ResetLabel>

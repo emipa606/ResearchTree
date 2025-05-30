@@ -18,6 +18,7 @@
   <Fluffy.ResearchTree.VerboseLogging>Registro detallado</Fluffy.ResearchTree.VerboseLogging>
   <Fluffy.ResearchTree.NoIdeologyPopup>No mostrar advertencia de meme faltante</Fluffy.ResearchTree.NoIdeologyPopup>
   <Fluffy.ResearchTree.NoIdeologyPopupTT>Al seleccionar una investigación, no se mostrará la advertencia de que se desbloquearán elementos que tu Ideología actual no permite</Fluffy.ResearchTree.NoIdeologyPopupTT>
+  <Fluffy.ResearchTree.HideNodesBlockedByTechLevel>Ocultar la investigación bloqueada por restricciones de nivel tecnológico</Fluffy.ResearchTree.HideNodesBlockedByTechLevel>
   <Fluffy.ResearchTree.Requires>Requiere</Fluffy.ResearchTree.Requires>
   <Fluffy.ResearchTree.NotStarted>No empezado, cuesta {0}</Fluffy.ResearchTree.NotStarted>
   <Fluffy.ResearchTree.InProgress>En progreso, {0} de {1} completado</Fluffy.ResearchTree.InProgress>

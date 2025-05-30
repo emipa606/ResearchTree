@@ -56,6 +56,7 @@ Bitte verwenden Sie die Option "Beim ersten Öffnen laden", wenn Sie dieses Prob
   <Fluffy.ResearchTree.VerboseLogging>Ausführliche Protokollierung</Fluffy.ResearchTree.VerboseLogging>
   <Fluffy.ResearchTree.NoIdeologyPopup>Fehlende Meme-Warnung nicht anzeigen</Fluffy.ResearchTree.NoIdeologyPopup>
   <Fluffy.ResearchTree.NoIdeologyPopupTT>Wenn Sie eine Forschung auswählen, wird die Popup-Warnung, dass sie Gegenstände freischaltet, die Ihre aktuelle Ideologie nicht zulässt, nicht angezeigt</Fluffy.ResearchTree.NoIdeologyPopupTT>
+  <Fluffy.ResearchTree.HideNodesBlockedByTechLevel>Forschung ausblenden, die durch Beschränkungen der Technologiestufe blockiert ist</Fluffy.ResearchTree.HideNodesBlockedByTechLevel>
   <Fluffy.ResearchTree.SemiRandomResearchLoaded>Semi-Zufallsforschung erlaubt keine freie Auswahl der Forschung</Fluffy.ResearchTree.SemiRandomResearchLoaded>
   <Fluffy.ResearchTree.Reset>Zurücksetzen</Fluffy.ResearchTree.Reset>
   <Fluffy.ResearchTree.ResetLabel>Alle Einstellungen zurücksetzen</Fluffy.ResearchTree.ResetLabel>

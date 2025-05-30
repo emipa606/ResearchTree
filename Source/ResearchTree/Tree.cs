@@ -705,6 +705,11 @@ public static class Tree
             return;
         }
 
+        if (Assets.IsHiddenByTechLevelRestrictions(techlevel))
+        {
+            return;
+        }
+
         var num = ((Constants.NodeSize.x + Constants.NodeMargins.x) * TechLevelBounds[techlevel].min) -
                   (Constants.NodeMargins.x / 2f);
         var num2 = ((Constants.NodeSize.x + Constants.NodeMargins.x) * TechLevelBounds[techlevel].max) -
@@ -723,10 +728,13 @@ public static class Tree
 
         if (TechLevelBounds[techlevel].max < Size.x && num2 > visibleRect.xMin && num2 < visibleRect.xMax)
         {
-            VerticalLabel(
-                new Rect(num2 - (Constants.TechLevelLabelSize.y / 2f) - (Constants.TechLevelLabelSize.x / 2f),
-                    visibleRect.center.y - (Constants.TechLevelLabelSize.y / 2f), Constants.TechLevelLabelSize.x,
-                    Constants.TechLevelLabelSize.y), techlevel.ToStringHuman());
+            if (!Assets.IsHiddenByTechLevelRestrictions(techlevel + 1))
+            {
+                VerticalLabel(
+                    new Rect(num2 - (Constants.TechLevelLabelSize.y / 2f) - (Constants.TechLevelLabelSize.x / 2f),
+                        visibleRect.center.y - (Constants.TechLevelLabelSize.y / 2f), Constants.TechLevelLabelSize.x,
+                        Constants.TechLevelLabelSize.y), techlevel.ToStringHuman());
+            }
         }
 
         GUI.color = Color.white;
