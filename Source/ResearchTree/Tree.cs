@@ -134,7 +134,7 @@ public static class Tree
             {
                 var horizontalSpan = Math.Abs(end.x - start.x);
                 var stub = Math.Min(Constants.NodeMargins.x / 4f, horizontalSpan / 2f);
-                var direction = Math.Sign(end.x - start.x);
+                var direction = Mathf.Sign(end.x - start.x);
                 if (Math.Abs(direction) < Constants.Epsilon)
                 {
                     direction = 1f;
