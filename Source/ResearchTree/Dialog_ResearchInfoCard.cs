@@ -109,55 +109,61 @@ public class Dialog_ResearchInfoCard : Window
 
 
         var scrollListing = new Listing_Standard();
+        var researchTreeInstance = MainTabWindow_ResearchTree.Instance;
         Widgets.BeginScrollView(borderRect, ref scrollPosition, scrollContentRect);
         scrollListing.Begin(scrollContentRect);
 
-        var alternate = true;
-        foreach (var unlockedThing in unlockDefsAndDescs.OrderBy(pair => pair.Second))
+        try
         {
-            scrollListing.Gap(1f);
-            var rect = scrollListing.GetRect(Constants.LargeIconSize.y);
-            alternate = !alternate;
-            var alternateRect = rect;
-            alternateRect.width = scrollContentRect.width;
-            if (alternate)
+            var alternate = true;
+            foreach (var unlockedThing in unlockDefsAndDescs.OrderBy(pair => pair.Second))
             {
-                Widgets.DrawBoxSolid(rect.ExpandedBy(0, 1), alternateBackground);
-            }
+                scrollListing.Gap(1f);
+                var rect = scrollListing.GetRect(Constants.LargeIconSize.y);
+                alternate = !alternate;
+                var alternateRect = rect;
+                alternateRect.width = scrollContentRect.width;
+                if (alternate)
+                {
+                    Widgets.DrawBoxSolid(rect.ExpandedBy(0, 1), alternateBackground);
+                }
 
-            if (Mouse.IsOver(alternateRect))
-            {
-                Widgets.DrawBox(rect.ExpandedBy(0, 1));
-            }
+                if (Mouse.IsOver(alternateRect))
+                {
+                    Widgets.DrawBox(rect.ExpandedBy(0, 1));
+                }
 
-            if (MainTabWindow_ResearchTree.Instance.IsQuickSearchWidgetActive() &&
-                MainTabWindow_ResearchTree.Instance.MatchesUnlockedDef(unlockedThing.First))
-            {
-                Widgets.DrawTextHighlight(rect);
-            }
+                if (researchTreeInstance != null && researchTreeInstance.IsQuickSearchWidgetActive() &&
+                    researchTreeInstance.MatchesUnlockedDef(unlockedThing.First))
+                {
+                    Widgets.DrawTextHighlight(rect);
+                }
 
-            if (Widgets.ButtonInvisible(alternateRect))
-            {
-                var itemInfocard = new Dialog_InfoCard(unlockedThing.First);
-                Find.WindowStack.Add(itemInfocard);
-            }
+                if (Widgets.ButtonInvisible(alternateRect))
+                {
+                    var itemInfocard = new Dialog_InfoCard(unlockedThing.First);
+                    Find.WindowStack.Add(itemInfocard);
+                }
 
-            rect.width = Constants.LargeIconSize.x;
-            Widgets.DefIcon(rect, unlockedThing.First);
-            //unlockedThing.First.DrawColouredIcon(rect);
-            var textRect = rect;
-            textRect.x += Constants.LargeIconSize.x + 2f;
-            textRect.width = scrollContentRect.width - Constants.LargeIconSize.x - 2f;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Text.WordWrap = false;
-            Widgets.Label(textRect, unlockedThing.Second);
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.WordWrap = true;
-            scrollListing.Gap(1f);
+                rect.width = Constants.LargeIconSize.x;
+                Widgets.DefIcon(rect, unlockedThing.First);
+                //unlockedThing.First.DrawColouredIcon(rect);
+                var textRect = rect;
+                textRect.x += Constants.LargeIconSize.x + 2f;
+                textRect.width = scrollContentRect.width - Constants.LargeIconSize.x - 2f;
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Text.WordWrap = false;
+                Widgets.Label(textRect, unlockedThing.Second);
+                Text.Anchor = TextAnchor.UpperLeft;
+                Text.WordWrap = true;
+                scrollListing.Gap(1f);
+            }
         }
-
-        scrollListing.End();
-        Widgets.EndScrollView();
+        finally
+        {
+            scrollListing.End();
+            Widgets.EndScrollView();
+        }
     }
 
     private string getTitle()
