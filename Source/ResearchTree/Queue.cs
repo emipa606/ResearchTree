@@ -109,7 +109,7 @@ public class Queue : WorldComponent
 
     private static void enqueue(ResearchNode node, bool add)
     {
-        if (node.Research.IsAnomalyResearch())
+        if (node?.Research == null || node.Research.IsAnomalyResearch())
         {
             return;
         }
@@ -128,7 +128,7 @@ public class Queue : WorldComponent
 
     private static void reEnqueue(ResearchNode node)
     {
-        if (node.Research.IsAnomalyResearch())
+        if (node?.Research == null || node.Research.IsAnomalyResearch())
         {
             return;
         }
