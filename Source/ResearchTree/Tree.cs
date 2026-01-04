@@ -869,31 +869,38 @@ public static class Tree
             return;
         }
 
-        // Track which rows are actually used.
+        // Track which rows contain actual research nodes so that we can drop
+        // dummy-only rows that bloat the layout.
         var used = new bool[maxY + 1];
-        foreach (var n in Nodes)
+        foreach (var researchNode in Nodes.OfType<ResearchNode>())
         {
-            int y = n.Y;
+            int y = researchNode.Y;
             if ((uint)y <= (uint)maxY) used[y] = true;
         }
 
-        // Build an oldY -> newY compression map.
+        // Build an oldY -> newY compression map that removes rows without
+        // research content while keeping relative order intact for all nodes.
         var map = new int[maxY + 1];
-        int next = 0;
+        int removed = 0;
         for (int y = 1; y <= maxY; y++)
         {
-            if (used[y]) { next++; map[y] = next; }
+            if (!used[y])
+            {
+                removed++;
+            }
+
+            map[y] = Math.Max(1, y - removed);
         }
 
         // Re-assign node Y positions using the compression map.
         foreach (var n in Nodes)
         {
             int y = n.Y;
-            if ((uint)y <= (uint)maxY && used[y]) n.Y = map[y];
+            if ((uint)y <= (uint)maxY) n.Y = map[y];
         }
 
         // Update Size.z to the new row count.
-        Size = new IntVec2(Size.x, next);
+        Size = new IntVec2(Size.x, Math.Max(0, maxY - removed));
 
         // Synchronize caches with the new Y ordering.
         if (_layerBuckets != null)
