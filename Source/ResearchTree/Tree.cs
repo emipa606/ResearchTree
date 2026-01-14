@@ -910,7 +910,6 @@ public static class Tree
                 var bucket = _layerBuckets[x];
                 if (bucket == null || bucket.Count == 0) continue;
                 bucket.Sort((a, b) => a.Y.CompareTo(b.Y));
-                for (int i = 0; i < bucket.Count; i++) bucket[i].Y = i + 1;
             }
         }
         if (_layerSlots != null && _layerBuckets != null)
