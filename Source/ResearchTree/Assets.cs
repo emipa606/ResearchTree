@@ -102,8 +102,6 @@ public static class Assets
     private static readonly PropertyInfo roundedRectMaterialProperty =
         AccessTools.Property(typeof(GUI), "roundedRectMaterial");
 
-    private static Material roundedRectMaterial;
-
     static Assets()
     {
         var harmonyPatcher = new Harmony("Mlie.ResearchTree");
@@ -380,13 +378,13 @@ public static class Assets
                 return null;
             }
 
-            if (roundedRectMaterial != null)
+            if (field != null)
             {
-                return roundedRectMaterial;
+                return field;
             }
 
-            roundedRectMaterial = (Material)roundedRectMaterialProperty.GetValue(null, null);
-            return roundedRectMaterial;
+            field = (Material)roundedRectMaterialProperty.GetValue(null, null);
+            return field;
         }
     }
 

@@ -1,5 +1,8 @@
 # Changelog for ResearchTree
 
+1.6.3 - Added scrolling horizontally by holding shift
+
+
 1.6.2 - Fixed compatibility with both semi research mods
 Research-progress above 999 should now fit the research nodes
 Added option to use Shift to replace the queue instead of normal left-click

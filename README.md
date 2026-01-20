@@ -89,4 +89,4 @@ Parts of the code in this mod, and some content may be licensed by their origina
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/ResearchTree?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3030499331) | tags:  queue,  tree
+[![Image](https://img.shields.io/github/v/release/emipa606/ResearchTree?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3030499331) | tags: queue, tree

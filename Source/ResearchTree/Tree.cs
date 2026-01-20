@@ -232,9 +232,8 @@ public static class Tree
             }
         }
 
-        num = 0;
         num2 = 2;
-        while (num2 > 0 && num < num3)
+        while (num2 > 0)
         {
             if (!EdgeLengthSweep_Global())
             {

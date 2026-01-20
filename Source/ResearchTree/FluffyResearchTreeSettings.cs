@@ -15,9 +15,9 @@ internal class FluffyResearchTreeSettings : ModSettings
     public bool NoIdeologyPopup;
     public bool OverrideResearch = true;
     public bool PauseOnOpen = true;
+    public bool ReverseShift;
 
     public bool ShowCompletion;
-    public bool ReverseShift;
 
     public bool VerboseLogging;
 

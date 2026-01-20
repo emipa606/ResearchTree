@@ -14,7 +14,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 {
     private static Vector2 _scrollPosition = Vector2.zero;
 
-    private static Rect _treeRect;
     private readonly HashSet<ResearchProjectDef> _matchingProjects = [];
 
     private readonly QuickSearchWidget _quickSearchWidget = new();
@@ -33,10 +32,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
     private Vector2 _mousePosition = Vector2.zero;
 
     private Rect _viewRect;
-
-    private Rect _viewRectInner;
-
-    private float _zoomLevel = 1f;
 
     public bool ViewRectDirty = true;
 
@@ -57,14 +52,14 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
     public float ZoomLevel
     {
-        get => _zoomLevel;
+        get;
         private set
         {
-            _zoomLevel = Mathf.Clamp(value, 1f, MaxZoomLevel);
+            field = Mathf.Clamp(value, 1f, MaxZoomLevel);
             ViewRectDirty = true;
             ViewRectInnerDirty = true;
         }
-    }
+    } = 1f;
 
     private Rect ViewRect
     {
@@ -92,13 +87,13 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         {
             if (!ViewRectInnerDirty)
             {
-                return _viewRectInner;
+                return field;
             }
 
-            _viewRectInner = _viewRect.ContractedBy(Margin * ZoomLevel);
+            field = _viewRect.ContractedBy(Margin * ZoomLevel);
             ViewRectInnerDirty = false;
 
-            return _viewRectInner;
+            return field;
         }
     }
 
@@ -106,16 +101,16 @@ public class MainTabWindow_ResearchTree : MainTabWindow
     {
         get
         {
-            if (_treeRect != default)
+            if (field != default)
             {
-                return _treeRect;
+                return field;
             }
 
             var width = Tree.Size.x * (Constants.NodeSize.x + Constants.NodeMargins.x);
             var height = Tree.Size.z * (Constants.NodeSize.y + Constants.NodeMargins.y) * 1.02f; // To avoid cutoff
-            _treeRect = new Rect(0f, 0f, width, height);
+            field = new Rect(0f, 0f, width, height);
 
-            return _treeRect;
+            return field;
         }
     }
 
@@ -269,11 +264,21 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             return;
         }
 
-        if (Event.current.control == FluffyResearchTreeMod.instance.Settings.CtrlFunction)
+        if (FluffyResearchTreeMod.instance.Settings.CtrlFunction)
         {
-            _scrollPosition.y += Event.current.delta.y * 10f;
-            return;
+            if (Event.current.control)
+            {
+                _scrollPosition.y += Event.current.delta.y * 10f;
+                return;
+            }
+
+            if (Event.current.shift)
+            {
+                _scrollPosition.x += Event.current.delta.x * 10f;
+                return;
+            }
         }
+
 
         var mousePosition = Event.current.mousePosition;
         var vector = (Event.current.mousePosition - _scrollPosition) / ZoomLevel;

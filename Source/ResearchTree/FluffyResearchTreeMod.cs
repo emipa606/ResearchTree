@@ -95,7 +95,9 @@ internal class FluffyResearchTreeMod : Mod
         {
             Settings.LoadType = Constants.LoadTypeLoadInBackground;
         }
-        listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.ReverseShift".Translate(), ref Settings.ReverseShift, "Fluffy.ResearchTree.ReverseShiftTT".Translate());
+
+        listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.ReverseShift".Translate(), ref Settings.ReverseShift,
+            "Fluffy.ResearchTree.ReverseShiftTT".Translate());
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.PauseOnOpen".Translate(), ref Settings.PauseOnOpen);
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.ShowCompletion".Translate(), ref Settings.ShowCompletion);
         if (ModsConfig.IdeologyActive)
