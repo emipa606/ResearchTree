@@ -264,21 +264,17 @@ public class MainTabWindow_ResearchTree : MainTabWindow
             return;
         }
 
-        if (FluffyResearchTreeMod.instance.Settings.CtrlFunction)
+        if (Event.current.shift)
         {
-            if (Event.current.control)
-            {
-                _scrollPosition.y += Event.current.delta.y * 10f;
-                return;
-            }
-
-            if (Event.current.shift)
-            {
-                _scrollPosition.x += Event.current.delta.x * 10f;
-                return;
-            }
+            _scrollPosition.x += Event.current.delta.x * 10f;
+            return;
         }
 
+        if (FluffyResearchTreeMod.instance.Settings.CtrlFunction == Event.current.control)
+        {
+            _scrollPosition.y += Event.current.delta.y * 10f;
+            return;
+        }
 
         var mousePosition = Event.current.mousePosition;
         var vector = (Event.current.mousePosition - _scrollPosition) / ZoomLevel;

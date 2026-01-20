@@ -1,5 +1,8 @@
 # Changelog for ResearchTree
 
+1.6.4 - Shift should always scrill horizontal
+
+
 1.6.3 - Added scrolling horizontally by holding shift
 
 
