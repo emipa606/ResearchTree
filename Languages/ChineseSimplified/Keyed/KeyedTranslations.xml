@@ -70,4 +70,5 @@
   <Fluffy.ResearchTree.ReverseShiftTT>在研究项目上左键单击时，您需要使用 SHIFT 左键单击，而不是替换整个队列</Fluffy.ResearchTree.ReverseShiftTT>
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Left-Click 替换队列</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>左键单击添加到队列</Fluffy.ResearchTree.LClickAddToQueue>
+  <Fluffy.ResearchTree.ScrollSpeed>滚动速度: {0}</Fluffy.ResearchTree.ScrollSpeed>
 </LanguageData>

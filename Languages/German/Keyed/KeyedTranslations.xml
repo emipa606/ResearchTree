@@ -70,4 +70,5 @@ Bitte verwenden Sie die Option "Beim ersten Öffnen laden", wenn Sie dieses Prob
   <Fluffy.ResearchTree.ReverseShiftTT>Anstatt die gesamte Warteschlange zu ersetzen, wenn man mit der linken Maustaste auf ein Forschungsprojekt klickt, muss man mit SHIFT Links-Klick</Fluffy.ResearchTree.ReverseShiftTT>
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Links-Klick zum Ersetzen der Warteschlange</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Links-Klick zum Hinzufügen zur Warteschlange</Fluffy.ResearchTree.LClickAddToQueue>
+  <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
 </LanguageData>

@@ -266,13 +266,13 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
         if (Event.current.shift)
         {
-            _scrollPosition.x += Event.current.delta.x * 10f;
+            _scrollPosition.x += Event.current.delta.x * (FluffyResearchTreeMod.instance.Settings.ScrollSpeed * 10);
             return;
         }
 
         if (FluffyResearchTreeMod.instance.Settings.CtrlFunction == Event.current.control)
         {
-            _scrollPosition.y += Event.current.delta.y * 10f;
+            _scrollPosition.y += Event.current.delta.y * (FluffyResearchTreeMod.instance.Settings.ScrollSpeed * 10);
             return;
         }
 

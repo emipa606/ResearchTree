@@ -88,6 +88,9 @@ internal class FluffyResearchTreeMod : Mod
             Settings.CtrlFunction = false;
         }
 
+        Settings.ScrollSpeed = listing_Standard.SliderLabeled(
+            "Fluffy.ResearchTree.ScrollSpeed".Translate(Settings.ScrollSpeed.ToStringPercent()), Settings.ScrollSpeed,
+            0.01f, 10f);
         listing_Standard.Gap();
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.OverrideResearch".Translate(),
             ref Settings.OverrideResearch);

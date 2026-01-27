@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
+  <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.HoldForClassic>Hold SHIFT to open the vanilla research window</Fluffy.ResearchTree.HoldForClassic>
   <Fluffy.ResearchTree.HoldForNew>Hold SHIFT to open the new research window</Fluffy.ResearchTree.HoldForNew>
   <Fluffy.ResearchTree.ReverseShift>Use SHIFT Left-Click to replace queue</Fluffy.ResearchTree.ReverseShift>

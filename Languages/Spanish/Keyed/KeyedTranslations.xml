@@ -70,4 +70,5 @@
   <Fluffy.ResearchTree.ReverseShiftTT>En lugar de reemplazar toda la cola al hacer clic con el botón izquierdo en un proyecto de investigación, es necesario utilizar SHIFT Clic Izquierdo</Fluffy.ResearchTree.ReverseShiftTT>
   <Fluffy.ResearchTree.SLClickReplaceQueue>Mayúsculas-Izquierda-Clic para reemplazar la cola</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Haga clic con el botón izquierdo para añadir a la cola</Fluffy.ResearchTree.LClickAddToQueue>
+  <Fluffy.ResearchTree.ScrollSpeed>Velocidad de desplazamiento: {0}</Fluffy.ResearchTree.ScrollSpeed>
 </LanguageData>

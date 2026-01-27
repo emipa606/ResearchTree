@@ -70,4 +70,5 @@ Veuillez utiliser l'option de chargement à la première ouverture si vous renco
   <Fluffy.ResearchTree.ReverseShiftTT>Au lieu de remplacer toute la file d'attente lorsque l'on fait un clic gauche sur un projet de recherche, il faut utiliser SHIFT Left-Click.</Fluffy.ResearchTree.ReverseShiftTT>
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Gauche-Clic pour remplacer la file d'attente</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Cliquer gauche pour ajouter à la file d'attente</Fluffy.ResearchTree.LClickAddToQueue>
+  <Fluffy.ResearchTree.ScrollSpeed>Vitesse de défilement : {0}</Fluffy.ResearchTree.ScrollSpeed>
 </LanguageData>

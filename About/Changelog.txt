@@ -1,5 +1,9 @@
 # Changelog for ResearchTree
 
+1.6.5 - Added a scroll-speed mod-setting
+Used DeepL to update translations for ChineseSimplified, French, German, Russian, Spanish
+
+
 1.6.4 - Shift should always scrill horizontal
 
 
