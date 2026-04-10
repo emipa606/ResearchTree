@@ -71,4 +71,5 @@ Veuillez utiliser l'option de chargement à la première ouverture si vous renco
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Gauche-Clic pour remplacer la file d'attente</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Cliquer gauche pour ajouter à la file d'attente</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Vitesse de défilement : {0}</Fluffy.ResearchTree.ScrollSpeed>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Empêcher la régénération de l'arbre de recherche en cas de changement de résolution</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
 </LanguageData>

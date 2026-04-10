@@ -71,4 +71,5 @@
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Left-Click 替换队列</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>左键单击添加到队列</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>滚动速度: {0}</Fluffy.ResearchTree.ScrollSpeed>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>当分辨率改变时，防止研究树再生</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
 </LanguageData>

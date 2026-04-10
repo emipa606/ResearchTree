@@ -19,6 +19,7 @@ public class ResearchNode : Node
     private readonly int cacheOrder;
 
     public readonly ResearchProjectDef Research;
+    private readonly TipSignal tooltipSignal;
 
     private bool availableCache;
 
@@ -35,6 +36,7 @@ public class ResearchNode : Node
         _pos = new Vector2(0f, research.researchViewY + 1f);
         cacheOrder = order;
         currentCacheOrder = Assets.TotalAmountOfResearch;
+        tooltipSignal = new TipSignal(GetTooltipText, Gen.HashCombineInt(research.GetHashCode(), 87131));
     }
 
     public List<ResearchNode> Parents
@@ -166,6 +168,11 @@ public class ResearchNode : Node
             return;
         }
 
+        TooltipHandler_Modified.TipRegion(Rect, tooltipSignal);
+    }
+
+    private string GetTooltipText()
+    {
         var researchTooltipString = getResearchTooltipString();
         var missingFacilities = MissingFacilities();
         if (missingFacilities?.Any() == true)
@@ -250,13 +257,15 @@ public class ResearchNode : Node
             researchTooltipString.AppendLine("Fluffy.ResearchTree.SemiRandomResearchLoaded".Translate());
         }
 
-        if (Assets.UsingRimedieval && !Assets.RimedievalAllowedResearchDefs.Contains(Research))
+        if (!Assets.UsingRimedieval || Assets.RimedievalAllowedResearchDefs.Contains(Research))
         {
-            researchTooltipString.AppendLine();
-            researchTooltipString.AppendLine("Fluffy.ResearchTree.RimedievalDoesNotAllow".Translate());
+            return researchTooltipString.ToString();
         }
 
-        TooltipHandler_Modified.TipRegion(Rect, researchTooltipString.ToString());
+        researchTooltipString.AppendLine();
+        researchTooltipString.AppendLine("Fluffy.ResearchTree.RimedievalDoesNotAllow".Translate());
+
+        return researchTooltipString.ToString();
     }
 
     private bool getCacheValue()

@@ -1,41 +1,54 @@
-# GitHub Copilot Instructions for Research Tree (Continued) Mod
+# GitHub Copilot Instructions for the "Research Tree (Continued)" Mod
 
 ## Mod Overview and Purpose
-The Research Tree (Continued) mod is an update of Fluffy's original mod, designed to enhance the research process in RimWorld. It introduces a visually intuitive way to navigate and manage research projects through an automated research tree interface. The mod ensures better readability and facilitates effortless project management in the game. 
+
+The "Research Tree (Continued)" mod is an enhanced continuation of the original mod by Fluffy, aimed at providing a more intuitive and feature-rich research tree for the game RimWorld. The mod replaces the vanilla research interface, offering an improved, automatically generated research tree that is designed to be more readable and efficient for players.
 
 ## Key Features and Systems
-- **Enhanced Research Infocard:** Access detailed information by right-clicking on research projects.
-- **Queue Management:** Add or prioritize research projects to the front of the queue with Ctrl+Left Click. Reorder the queue via drag-and-drop.
-- **Progress Visibility:** Display current progress values on ongoing projects.
-- **Camera Locking:** Prevent accidental movement by locking the camera when the research window is open.
-- **Original Window Access:** Open the vanilla research window by holding Shift.
-- **Mod Options:** Configure when to generate the tree and whether to pause the game when the tree is displayed.
-- **Caching:** Implements caching of research nodes to reduce stutter with large research-trees.
-- **Scroll Functionality:** Incorporates scroll-wheel scrolling with Ctrl and a scrollbar for the research queue.
-- **Customizable Display:** Choose background colors and hide specific warnings or blocked research items.
-- **Compatibility:** Enhanced compatibility with several popular mods, including Biotech, Research Reinvented, and GrimWorld 40,000 - Framework.
+
+- **Research Infocard**: Accessible via right-click, providing detailed information about research projects.
+- **Queue Management**: Easily add or move research to the front of the queue with Ctrl+Left-click. Drag-and-drop functionality for rearranging queued projects.
+- **Progress Tracking**: View current progress values of unfinished research projects.
+- **UI Enhancements**: 
+  - Locked camera when in the research window.
+  - Shift opens the original research window.
+  - Mod options to customize tree generation timing and pause the game when the tree is open.
+  - Scroll-wheel support while holding Ctrl and a scroll-bar for the queue.
+- **Performance Improvements**: Caching of research nodes to reduce stuttering and improved visual rendering techniques.
+- **Customization Options**: Selectable background colors and the ability to hide "Missing Meme" warnings.
+- **Compatibility**: Supports various other mods like Biotech, Research Reinvented, and more, ensuring a seamless experience.
 
 ## Coding Patterns and Conventions
-- **Static Classes:** Common utility extensions and handlers are implemented as static classes (e.g., `Building_ResearchBench_Extensions`).
-- **Subclass Inheritance:** Derive specialized classes from base classes (e.g., `ResearchNode` extends `Node`) to promote code reuse.
-- **World Component Usage:** Use `WorldComponent` for persistent game data management (`Queue` class).
-- **Singleton Patterns:** Ensure a single point of access for settings and configurations, as shown by `FluffyResearchTreeSettings`.
+
+- **C# Static Classes**: Utilize static classes for extensions (e.g., `Building_ResearchBench_Extensions`, `Def_Extensions`).
+- **Separation of Concerns**: Classes are organized to separate functionality (e.g., UI handling, research logic, compatibility adjustments).
+- **Naming Conventions**: Follows PascalCasing for classes and methods, and camelCasing for local variables.
 
 ## XML Integration
-- The mod heavily relies on XML for defining research projects and their dependencies.
-- XML files are parsed to extract research details, automatically updating the research tree layout.
+
+- Research definitions are enhanced through XML files, which support mod compatibility and allow for modification of research requirements and categories.
+- XML is used to define mod settings accessible in-game, allowing players to customize their experience.
 
 ## Harmony Patching
-- Utilize Harmony for non-invasive code modifications and compatibility with existing game mechanisms.
-- Example usage can be seen in files like `MainTabWindow_Research_AttemptBeginResearch.cs` to safely extend existing functionalities without altering the core game code.
+
+- **Harmony** is used extensively for patching existing methods to enhance or modify game behavior.
+- Focus on safe patching practices, ensuring compatibility with other mods by only altering specific behaviors as needed.
+- Example usage includes patching methods in the game's research logic to enable features like custom research queuing and progress display.
 
 ## Suggestions for Copilot
-- **Code Consistency:** Maintain consistency with method and class naming as seen across different files.
-- **XML Handling:** Suggest XML parsing and manipulation for handling research dependencies.
-- **Harmony Use:** Propose patches that interact with RimWorld's core mechanics without direct modification.
-- **Utility Functions:** Recommend utility functions for frequently used operations, including logging via the `Logging` class.
-- **Interface Implementation:** Suggest class definitions that extend base classes such as `Window` for UI modifications.
-- **Performance Optimization:** Consider using cached values where applicable to reduce performance overhead.
-- **Documented Examples:** Recommend well-documented examples when suggesting code to provide inline clarity.
 
-By following these instructions, you can effectively contribute to extending and refining the Research Tree (Continued) mod, ensuring a cohesive integration with RimWorld's systems and a smooth user experience.
+When using GitHub Copilot, keep these suggestions in mind:
+
+- **Context Awareness**: Utilize Copilot's ability to suggest code based on your current scope or function context, especially useful when working with Harmony patches.
+- **Consistent Style**: Encourage suggestions that adhere to established coding conventions and patterns for consistency across the mod codebase.
+- **Experimentation**: Use Copilot for generating new ideas for UI components or enhancing existing features, like visual elements in the research tree UI.
+- **Efficiency Improvements**: Leverage Copilot to explore potential optimizations in frequently executed algorithms, such as node rendering or queue management.
+
+By following these guidelines and utilizing the rich set of features provided by the "Research Tree (Continued)" mod, you can effectively enhance the research experience in RimWorld and integrate seamlessly with the broader mod ecosystem.
+
+## Project Solution Guidelines
+- Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
+- Use these in-solution XML files as the primary files for reference and modification.
+- The .github/copilot-instructions.md file is included in the solution under the .github solution folder, so it should be read/modified from within the solution instead of using paths outside the solution. Update this file once only, as it and the parent-path solution reference point to the same file in this workspace.
+- When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution .github copy as the primary file.
+- In the solution is also a project called Assembly-CSharp, containing a read-only version of the decompiled game source, for reference and debugging purposes.

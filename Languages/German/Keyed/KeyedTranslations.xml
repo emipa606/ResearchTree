@@ -71,4 +71,5 @@ Bitte verwenden Sie die Option "Beim ersten Öffnen laden", wenn Sie dieses Prob
   <Fluffy.ResearchTree.SLClickReplaceQueue>Shift-Links-Klick zum Ersetzen der Warteschlange</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Links-Klick zum Hinzufügen zur Warteschlange</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Regeneration des Forschungsbaums bei Auflösungsänderungen verhindern</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
 </LanguageData>

@@ -687,12 +687,15 @@ public static class Tree
             drawTechLevel(relevantTechLevel, visibleRect);
         }
 
-        // Draw edges
-        foreach (var edge in Edges.OrderBy(e => e.DrawOrder))
+        // Draw edges without per-frame sorting allocations
+        for (var drawOrder = 0; drawOrder <= 3; drawOrder++)
         {
-            if (IsEdgeVisible(edge, visibleRect))
+            foreach (var edge in Edges)
             {
-                edge.Draw(visibleRect);
+                if (edge.DrawOrder == drawOrder)
+                {
+                    edge.Draw(visibleRect);
+                }
             }
         }
 

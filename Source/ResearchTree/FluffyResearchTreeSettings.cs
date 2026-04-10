@@ -9,6 +9,7 @@ namespace FluffyResearchTree;
 internal class FluffyResearchTreeSettings : ModSettings
 {
     public Color BackgroundColor = new(0f, 0f, 0f, 0.1f);
+    public bool BlockRegenerationOnResolutionChange;
     public bool CtrlFunction = true;
     public bool HideNodesBlockedByTechLevel;
     public int LoadType = Constants.LoadTypeLoadInBackground;
@@ -37,6 +38,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         Scribe_Values.Look(ref NoIdeologyPopup, "NoIdeologyPopup");
         Scribe_Values.Look(ref HideNodesBlockedByTechLevel, "HideNodesBlockedByTechLevel");
         Scribe_Values.Look(ref VerboseLogging, "VerboseLogging");
+        Scribe_Values.Look(ref BlockRegenerationOnResolutionChange, "BlockRegenerationOnResolutionChange");
         Scribe_Values.Look(ref LoadType, "LoadType", 1);
         Scribe_Values.Look(ref BackgroundColor, "BackgroundColor", new Color(0f, 0f, 0f, 0.1f));
     }
@@ -51,6 +53,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         NoIdeologyPopup = false;
         HideNodesBlockedByTechLevel = false;
         VerboseLogging = false;
+        BlockRegenerationOnResolutionChange = false;
         ScrollSpeed = 1f;
         LoadType = Constants.LoadTypeLoadInBackground;
         BackgroundColor = new Color(0f, 0f, 0f, 0.1f);

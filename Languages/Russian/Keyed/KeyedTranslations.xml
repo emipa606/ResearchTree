@@ -70,4 +70,5 @@
   <Fluffy.ResearchTree.SLClickReplaceQueue>Щелкните левой кнопкой мыши, чтобы заменить очередь</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Щелкните левой кнопкой мыши, чтобы добавить в очередь</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Предотвращение регенерации дерева исследований при изменении разрешения</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
 </LanguageData>

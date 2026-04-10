@@ -1,5 +1,9 @@
 # Changelog for ResearchTree
 
+1.6.6 - Added option to not regenerate tree on resulution change. Slightly improved the framerate when dragging the tree.
+Used DeepL to update translations for ChineseSimplified, French, German, Russian, Spanish
+
+
 1.6.5 - Added a scroll-speed mod-setting
 Used DeepL to update translations for ChineseSimplified, French, German, Russian, Spanish
 

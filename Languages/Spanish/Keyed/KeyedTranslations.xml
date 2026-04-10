@@ -71,4 +71,5 @@
   <Fluffy.ResearchTree.SLClickReplaceQueue>Mayúsculas-Izquierda-Clic para reemplazar la cola</Fluffy.ResearchTree.SLClickReplaceQueue>
   <Fluffy.ResearchTree.LClickAddToQueue>Haga clic con el botón izquierdo para añadir a la cola</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Velocidad de desplazamiento: {0}</Fluffy.ResearchTree.ScrollSpeed>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Evitar la regeneración del árbol de investigación cuando cambia la resolución</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
 </LanguageData>

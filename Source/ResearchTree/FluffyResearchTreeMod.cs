@@ -99,6 +99,8 @@ internal class FluffyResearchTreeMod : Mod
             Settings.LoadType = Constants.LoadTypeLoadInBackground;
         }
 
+        listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.BlockRegenerationOnResolutionChange".Translate(),
+            ref Settings.BlockRegenerationOnResolutionChange);
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.ReverseShift".Translate(), ref Settings.ReverseShift,
             "Fluffy.ResearchTree.ReverseShiftTT".Translate());
         listing_Standard.CheckboxLabeled("Fluffy.ResearchTree.PauseOnOpen".Translate(), ref Settings.PauseOnOpen);

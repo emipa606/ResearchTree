@@ -24,6 +24,11 @@ public class WindowStack_AdjustWindowsIfResolutionChanged
             return;
         }
 
+        if (FluffyResearchTreeMod.instance?.Settings.BlockRegenerationOnResolutionChange == true)
+        {
+            return;
+        }
+
         var treeWindow = ___windows?.FirstOrDefault(window => window is MainTabWindow_ResearchTree);
         if (treeWindow is { IsOpen: true })
         {

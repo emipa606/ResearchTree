@@ -6,4 +6,16 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="ResearchTree/FluffyResearchTree.csproj" />
+  <Folder Name="/XML/1.6/Defs/MainTabDefs/">
+    <File Path="../1.6/Defs/MainTabDefs/MainTabWindow.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/KeyedTranslations.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Patches/">
+    <File Path="../1.6/Patches/ResearchButton.xml" />
+  </Folder>
 </Solution>

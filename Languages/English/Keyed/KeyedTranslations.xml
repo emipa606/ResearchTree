@@ -67,6 +67,7 @@
   <Fluffy.ResearchTree.CtrlFunctionScroll>Use Ctrl to vertically scroll the research-tree, Shift horizontal</Fluffy.ResearchTree.CtrlFunctionScroll>
   <Fluffy.ResearchTree.CtrlFunctionZoom>Use Ctrl to zoom the research-tree</Fluffy.ResearchTree.CtrlFunctionZoom>
   <Fluffy.ResearchTree.ResolutionChange>ResearchTree: Graphic-change detected, research tree will be regenerated</Fluffy.ResearchTree.ResolutionChange>
+  <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Prevent research-tree regeneration when resolution changes</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
   <Fluffy.ResearchTree.UIScaleWarning>When using UI scale larger than 1x you may experience research labels getting cut off if using the background loading option.
 Please use the load on first time opening if you experience this.</Fluffy.ResearchTree.UIScaleWarning>
   <Fluffy.ResearchTree.OverrideResearch>Make the research tree as default research tab \n(hold shift for open vanilla)</Fluffy.ResearchTree.OverrideResearch>
