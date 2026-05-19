@@ -1,5 +1,9 @@
 # Changelog for ResearchTree
 
+1.6.8 - Increased responsiveness of the gui when using Linux
+Used DeepL to update translations for ChineseSimplified, French, German, Russian, Spanish
+
+
 1.6.7 - Fixed load-order with Vanilla Gravship Expanded - Chapter 1
 
 

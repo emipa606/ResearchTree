@@ -12,6 +12,7 @@ internal class FluffyResearchTreeSettings : ModSettings
     public bool BlockRegenerationOnResolutionChange;
     public bool CtrlFunction = true;
     public bool HideNodesBlockedByTechLevel;
+    public bool LinuxUseCompatibilityDrawing;
     public int LoadType = Constants.LoadTypeLoadInBackground;
     public bool NoIdeologyPopup;
     public bool OverrideResearch = true;
@@ -37,6 +38,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         Scribe_Values.Look(ref ScrollSpeed, "ScrollSpeed", 1f);
         Scribe_Values.Look(ref NoIdeologyPopup, "NoIdeologyPopup");
         Scribe_Values.Look(ref HideNodesBlockedByTechLevel, "HideNodesBlockedByTechLevel");
+        Scribe_Values.Look(ref LinuxUseCompatibilityDrawing, "LinuxUseCompatibilityDrawing");
         Scribe_Values.Look(ref VerboseLogging, "VerboseLogging");
         Scribe_Values.Look(ref BlockRegenerationOnResolutionChange, "BlockRegenerationOnResolutionChange");
         Scribe_Values.Look(ref LoadType, "LoadType", 1);
@@ -52,6 +54,7 @@ internal class FluffyResearchTreeSettings : ModSettings
         ReverseShift = false;
         NoIdeologyPopup = false;
         HideNodesBlockedByTechLevel = false;
+        LinuxUseCompatibilityDrawing = false;
         VerboseLogging = false;
         BlockRegenerationOnResolutionChange = false;
         ScrollSpeed = 1f;

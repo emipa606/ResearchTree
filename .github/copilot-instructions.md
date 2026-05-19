@@ -1,54 +1,52 @@
-# GitHub Copilot Instructions for the "Research Tree (Continued)" Mod
+# GitHub Copilot Instructions for RimWorld: Research Tree (Continued) Mod
 
 ## Mod Overview and Purpose
 
-The "Research Tree (Continued)" mod is an enhanced continuation of the original mod by Fluffy, aimed at providing a more intuitive and feature-rich research tree for the game RimWorld. The mod replaces the vanilla research interface, offering an improved, automatically generated research tree that is designed to be more readable and efficient for players.
+The "Research Tree (Continued)" mod is an update of the original "Research Tree" mod by Fluffy. This mod enhances the in-game research system by providing an intuitive and visually appealing tree structure for research projects. It aims to improve accessibility and management of research tasks, offering a better interface for players to plan and progress through their research, ultimately enhancing gameplay experience.
 
 ## Key Features and Systems
 
-- **Research Infocard**: Accessible via right-click, providing detailed information about research projects.
-- **Queue Management**: Easily add or move research to the front of the queue with Ctrl+Left-click. Drag-and-drop functionality for rearranging queued projects.
-- **Progress Tracking**: View current progress values of unfinished research projects.
-- **UI Enhancements**: 
-  - Locked camera when in the research window.
-  - Shift opens the original research window.
-  - Mod options to customize tree generation timing and pause the game when the tree is open.
-  - Scroll-wheel support while holding Ctrl and a scroll-bar for the queue.
-- **Performance Improvements**: Caching of research nodes to reduce stuttering and improved visual rendering techniques.
-- **Customization Options**: Selectable background colors and the ability to hide "Missing Meme" warnings.
-- **Compatibility**: Supports various other mods like Biotech, Research Reinvented, and more, ensuring a seamless experience.
+- **Research Infocard**: Easily view detailed research project information by right-clicking.
+- **Queue Management Enhancements**: Add or prioritize research projects in the queue using Ctrl+Left-click. Includes drag-and-drop reordering, scroll-wheel support with Ctrl, and a scroll-bar for the research queue.
+- **Graphical Improvements**: Improved aesthetics and performance with options to cache research nodes, lock the camera, and selectable background colors.
+- **Mod Options**: Control when the research tree is generated and whether the game pauses while the tree is open.
+- **Compatibility**: Extensive support for popular mods including Biotech, Research Reinvented, Save Our Ship 2, and more.
+- **Miscellaneous**: Options to hide "Missing Meme" warnings and block research from tech-limiting mods.
 
 ## Coding Patterns and Conventions
 
-- **C# Static Classes**: Utilize static classes for extensions (e.g., `Building_ResearchBench_Extensions`, `Def_Extensions`).
-- **Separation of Concerns**: Classes are organized to separate functionality (e.g., UI handling, research logic, compatibility adjustments).
-- **Naming Conventions**: Follows PascalCasing for classes and methods, and camelCasing for local variables.
+- Follow C# best practices and naming conventions for classes, methods, and properties.
+- Use a modular approach for defining extensions, keeping methods related to a specific functionality in dedicated classes.
+- Utilize static classes for utility functions, such as `Def_Extensions`, to avoid unnecessary instantiation.
+- Ensure methods follow single responsibility principle, focusing each on a specific operation.
 
 ## XML Integration
 
-- Research definitions are enhanced through XML files, which support mod compatibility and allow for modification of research requirements and categories.
-- XML is used to define mod settings accessible in-game, allowing players to customize their experience.
+- XML is used to define research projects, buildings, and nodes as needed by the game.
+- Ensure synchronization between C# logic and XML definitions.
+- Utilize XML parsing to dynamically update the research tree layout based on mod-specific requirements.
 
 ## Harmony Patching
 
-- **Harmony** is used extensively for patching existing methods to enhance or modify game behavior.
-- Focus on safe patching practices, ensuring compatibility with other mods by only altering specific behaviors as needed.
-- Example usage includes patching methods in the game's research logic to enable features like custom research queuing and progress display.
+- Utilize Harmony for runtime method patching to extend or alter game behavior.
+- Apply patches in a non-destructive manner to ensure compatibility and stability.
+- Focus on augmenting essential game processes, such as research queue handling or UI modifications, using Harmony patches.
 
 ## Suggestions for Copilot
 
-When using GitHub Copilot, keep these suggestions in mind:
+- **Code Reusability**: Encourage Copilot to suggest reusable code blocks for operations such as tree rendering, node management, and UI drawing.
+- **Performance Optimization**: Assist with identifying areas for caching or asynchronous processing to enhance mod performance.
+- **Feature Expansion**: Propose new features or improvements based on player feedback or common modding patterns.
+- **Compatibility Tips**: Suggest methods for integrating with other mods, focusing on non-invasive system extensions via Harmony patches.
 
-- **Context Awareness**: Utilize Copilot's ability to suggest code based on your current scope or function context, especially useful when working with Harmony patches.
-- **Consistent Style**: Encourage suggestions that adhere to established coding conventions and patterns for consistency across the mod codebase.
-- **Experimentation**: Use Copilot for generating new ideas for UI components or enhancing existing features, like visual elements in the research tree UI.
-- **Efficiency Improvements**: Leverage Copilot to explore potential optimizations in frequently executed algorithms, such as node rendering or queue management.
+## Conclusion
 
-By following these guidelines and utilizing the rich set of features provided by the "Research Tree (Continued)" mod, you can effectively enhance the research experience in RimWorld and integrate seamlessly with the broader mod ecosystem.
+The "Research Tree (Continued)" mod is an essential enhancement for players seeking a more organized and efficient way to manage RimWorld's research mechanics. Its compatibility with various popular mods makes it a versatile choice for diverse mod setups. By following best practices and leveraging the capabilities of GitHub Copilot, developers can continue improving this mod and ensure it remains a valuable addition to the RimWorld modding community.
 
 ## Project Solution Guidelines
 - Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
 - Use these in-solution XML files as the primary files for reference and modification.
-- The .github/copilot-instructions.md file is included in the solution under the .github solution folder, so it should be read/modified from within the solution instead of using paths outside the solution. Update this file once only, as it and the parent-path solution reference point to the same file in this workspace.
-- When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution .github copy as the primary file.
+- The `.github/copilot-instructions.md` file is included in the solution under the `.github` solution folder, so it should be read/modified from within the solution instead of using paths outside the solution. Update this file once only, as it and the parent-path solution reference point to the same file in this workspace.
+- When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution `.github` copy as the primary file.
 - In the solution is also a project called Assembly-CSharp, containing a read-only version of the decompiled game source, for reference and debugging purposes.
+- For any new documentation, update this copilot-instructions.md file rather than creating separate documentation files.

@@ -72,4 +72,6 @@
   <Fluffy.ResearchTree.LClickAddToQueue>Haga clic con el botón izquierdo para añadir a la cola</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Velocidad de desplazamiento: {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Evitar la regeneración del árbol de investigación cuando cambia la resolución</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>Linux: uso de la compatibilidad de dibujo</Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>Sólo Linux. Utiliza el dibujo GUI estándar en lugar de la ruta de dibujo rápida interna. Esto puede reducir el lag en algunos sistemas.</Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>
 </LanguageData>

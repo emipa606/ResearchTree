@@ -72,4 +72,6 @@ Veuillez utiliser l'option de chargement à la première ouverture si vous renco
   <Fluffy.ResearchTree.LClickAddToQueue>Cliquer gauche pour ajouter à la file d'attente</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Vitesse de défilement : {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Empêcher la régénération de l'arbre de recherche en cas de changement de résolution</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>Linux : utiliser le dessin de compatibilité</Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>Linux uniquement. Utilise le dessin standard de l'interface graphique au lieu du chemin de dessin rapide interne. Cela peut réduire le lag sur certains systèmes.</Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>
 </LanguageData>

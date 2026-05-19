@@ -72,4 +72,6 @@ Bitte verwenden Sie die Option "Beim ersten Öffnen laden", wenn Sie dieses Prob
   <Fluffy.ResearchTree.LClickAddToQueue>Links-Klick zum Hinzufügen zur Warteschlange</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Regeneration des Forschungsbaums bei Auflösungsänderungen verhindern</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>Linux: Kompatibilität verwenden Zeichnung Fallback</Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>Nur für Linux. Verwendet das Standard-GUI-Zeichnen anstelle des internen schnellen Zeichenpfads. Dies kann die Verzögerung auf einigen Systemen reduzieren.</Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>
 </LanguageData>

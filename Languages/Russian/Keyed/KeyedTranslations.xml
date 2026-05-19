@@ -71,4 +71,6 @@
   <Fluffy.ResearchTree.LClickAddToQueue>Щелкните левой кнопкой мыши, чтобы добавить в очередь</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>Scrollspeed: {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>Предотвращение регенерации дерева исследований при изменении разрешения</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>Linux: использовать обратный переход на отрисовку совместимости</Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>Только для Linux. Использует стандартную отрисовку графического интерфейса вместо внутреннего быстрого пути отрисовки. Это может уменьшить задержку на некоторых системах.</Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>
 </LanguageData>

@@ -72,4 +72,6 @@
   <Fluffy.ResearchTree.LClickAddToQueue>左键单击添加到队列</Fluffy.ResearchTree.LClickAddToQueue>
   <Fluffy.ResearchTree.ScrollSpeed>滚动速度: {0}</Fluffy.ResearchTree.ScrollSpeed>
   <Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>当分辨率改变时，防止研究树再生</Fluffy.ResearchTree.BlockRegenerationOnResolutionChange>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>Linux：使用兼容性绘图回退</Fluffy.ResearchTree.LinuxUseCompatibilityDrawing>
+  <Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>仅限 Linux。使用标准图形用户界面绘制而非内部快速绘制路径。这可能会减少某些系统上的延迟。</Fluffy.ResearchTree.LinuxUseCompatibilityDrawingTT>
 </LanguageData>
