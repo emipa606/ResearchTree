@@ -88,12 +88,10 @@ public static class ResearchProjectDef_Extensions
                     continue;
                 }
 
-                foreach (var prerequisite in researchProjectDef.prerequisites)
+                foreach (var prerequisite in researchProjectDef.prerequisites.Where(p =>
+                             p != researchProjectDef && !list.Contains(p)))
                 {
-                    if (prerequisite != researchProjectDef && !list.Contains(prerequisite))
-                    {
-                        stack.Push(prerequisite);
-                    }
+                    stack.Push(prerequisite);
                 }
             }
 
@@ -169,7 +167,7 @@ public static class ResearchProjectDef_Extensions
 
         public ResearchNode ResearchNode()
         {
-            if (IsAnomalyResearch(research))
+            if (research.IsAnomalyResearch())
             {
                 return null;
             }

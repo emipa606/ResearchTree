@@ -33,7 +33,7 @@ public class Dialog_ResearchInfoCard : Window
 
         if (!string.IsNullOrEmpty(researchProjectDef.modContentPack?.Name))
         {
-            listingStandard.Label(researchProjectDef.modContentPack.Name);
+            listingStandard.Label(researchProjectDef.modContentPack?.Name);
         }
 
         if (researchProjectDef.IsFinished)
@@ -132,7 +132,6 @@ public class Dialog_ResearchInfoCard : Window
 
             rect.width = Constants.LargeIconSize.x;
             Widgets.DefIcon(rect, unlockedThing.First);
-            //unlockedThing.First.DrawColouredIcon(rect);
             var textRect = rect;
             textRect.x += Constants.LargeIconSize.x + 2f;
             textRect.width = scrollContentRect.width - Constants.LargeIconSize.x - 2f;

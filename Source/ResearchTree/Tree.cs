@@ -570,9 +570,8 @@ public static class Tree
                 continue;
             }
 
-            var enumerable =
-                researchNode.Research.prerequisites.SelectMany(r => r.Ancestors()).ToList().Intersect(researchNode
-                    .Research.prerequisites);
+            var enumerable = researchNode.Research.prerequisites.SelectMany(r => r.Ancestors())
+                .Intersect(researchNode.Research.prerequisites);
             if (!enumerable.Any())
             {
                 continue;
@@ -700,12 +699,9 @@ public static class Tree
         }
 
         // Draw nodes
-        foreach (var node in Nodes)
+        foreach (var node in Nodes.Where(n => n.IsWithinViewport(visibleRect)))
         {
-            if (node.IsWithinViewport(visibleRect))
-            {
-                node.Draw(visibleRect);
-            }
+            node.Draw(visibleRect);
         }
     }
 
@@ -745,15 +741,13 @@ public static class Tree
                     Constants.TechLevelLabelSize.y), techlevel.ToStringHuman());
         }
 
-        if (TechLevelBounds[techlevel].max < Size.x && num2 > visibleRect.xMin && num2 < visibleRect.xMax)
+        if (TechLevelBounds[techlevel].max < Size.x && num2 > visibleRect.xMin && num2 < visibleRect.xMax &&
+            !Assets.IsHiddenByTechLevelRestrictions(techlevel + 1))
         {
-            if (!Assets.IsHiddenByTechLevelRestrictions(techlevel + 1))
-            {
-                verticalLabel(
-                    new Rect(num2 - (Constants.TechLevelLabelSize.y / 2f) - (Constants.TechLevelLabelSize.x / 2f),
-                        visibleRect.center.y - (Constants.TechLevelLabelSize.y / 2f), Constants.TechLevelLabelSize.x,
-                        Constants.TechLevelLabelSize.y), techlevel.ToStringHuman());
-            }
+            verticalLabel(
+                new Rect(num2 - (Constants.TechLevelLabelSize.y / 2f) - (Constants.TechLevelLabelSize.x / 2f),
+                    visibleRect.center.y - (Constants.TechLevelLabelSize.y / 2f), Constants.TechLevelLabelSize.x,
+                    Constants.TechLevelLabelSize.y), techlevel.ToStringHuman());
         }
 
         GUI.color = Color.white;
@@ -1046,6 +1040,7 @@ public static class Tree
         {
             while (_initializing)
             {
+                // Wait
             }
 
             return;

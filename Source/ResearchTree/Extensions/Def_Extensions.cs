@@ -2,7 +2,6 @@
 // Copyright Karel Kroeze, 2018-2020
 
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -41,13 +40,13 @@ public static class Def_Extensions
             var pawnKindDef = def as PawnKindDef;
             if (def is RecipeDef recipeDef && !recipeDef.products.NullOrEmpty())
             {
-                _cachedIconColors.Add(def, recipeDef.products.First().thingDef.iconColor());
+                _cachedIconColors.Add(def, recipeDef.products[0].thingDef.iconColor());
                 return _cachedIconColors[def];
             }
 
             if (pawnKindDef != null)
             {
-                _cachedIconColors.Add(def, pawnKindDef.lifeStages.Last().bodyGraphicData.color);
+                _cachedIconColors.Add(def, pawnKindDef.lifeStages[^1].bodyGraphicData.color);
                 return _cachedIconColors[def];
             }
 
@@ -97,7 +96,7 @@ public static class Def_Extensions
             var pawnKindDef = def as PawnKindDef;
             if (def is RecipeDef recipeDef && !recipeDef.products.NullOrEmpty())
             {
-                _cachedDefIcons.Add(def, recipeDef.products.First().thingDef.IconTexture());
+                _cachedDefIcons.Add(def, recipeDef.products[0].thingDef.IconTexture());
                 return _cachedDefIcons[def];
             }
 
@@ -106,7 +105,7 @@ public static class Def_Extensions
                 try
                 {
                     _cachedDefIcons.Add(def,
-                        pawnKindDef.lifeStages.Last().bodyGraphicData.Graphic.MatSouth.mainTexture as Texture2D);
+                        pawnKindDef.lifeStages[^1].bodyGraphicData.Graphic.MatSouth.mainTexture as Texture2D);
                     return _cachedDefIcons[def];
                 }
                 catch

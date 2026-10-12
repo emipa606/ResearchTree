@@ -9,7 +9,7 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch(typeof(MainTabWindow_Research), "AttemptBeginResearch")]
-public class MainTabWindow_Research_AttemptBeginResearch
+public static class MainTabWindow_Research_AttemptBeginResearch
 {
     private static readonly MethodInfo Dialog_MessageBox_CreateConfirmationMethodInfo =
         AccessTools.Method(typeof(Dialog_MessageBox), nameof(Dialog_MessageBox.CreateConfirmation),
@@ -22,7 +22,7 @@ public class MainTabWindow_Research_AttemptBeginResearch
             typeof(WindowLayer)
         ]);
 
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
     {
         var instructions = instr.ToList();
 

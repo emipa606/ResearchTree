@@ -9,7 +9,7 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch(typeof(MainTabWindow_Research), "ListProjects")]
-public class MainTabWindow_Research_ListProjects
+public static class MainTabWindow_Research_ListProjects
 {
     private static readonly MethodInfo CustomButtonTextMethodInfo =
         AccessTools.Method(typeof(Widgets), nameof(Widgets.CustomButtonText));
@@ -17,7 +17,7 @@ public class MainTabWindow_Research_ListProjects
     /// <summary>
     ///     Determine the index by viewing the IL code of the MainTabWindow_Research.ListProjects method through dnSpy.
     /// </summary>
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr,
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr,
         ILGenerator generator)
     {
         var instructions = instr.ToList();
@@ -27,13 +27,11 @@ public class MainTabWindow_Research_ListProjects
         for (var i = 0; i < codes.Count - 18; i++)
         {
             if (
-                // int borderSize = flag4 ? 2 : 1;
                 codes[i].opcode == OpCodes.Ldc_I4_1 &&
                 codes[i + 1].opcode == OpCodes.Br_S &&
                 codes[i + 2].opcode == OpCodes.Ldc_I4_2 &&
                 codes[i + 3].opcode == OpCodes.Stloc_S &&
                 codes[i + 4].opcode == OpCodes.Ldloca_S &&
-                // if (Widgets.CustomButtonText...
                 codes[i + 18].Calls(CustomButtonTextMethodInfo)
             )
             {
@@ -66,8 +64,7 @@ public class MainTabWindow_Research_ListProjects
         }
 
         var opts = new List<CodeInstruction>();
-        // if (Widgets.CustomButtonText(ref rect1,...     ref: Ldloca_S change to Ldloc_S
-        codeInstruction0.opcode = OpCodes.Ldloc_S;
+        codeInstruction0?.opcode = OpCodes.Ldloc_S;
         opts.Add(codeInstruction0); // ldloc.s 
         opts.Add(codeInstruction1); // ldloc.s
         opts.Add(codeInstruction2); // ldfld

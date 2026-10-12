@@ -25,10 +25,13 @@ internal static class FastGUI
     private static readonly FieldInfo ColorField = UnityInternalDrawTextureArgumentsType?.GetField("color");
     private static readonly FieldInfo SourceRectField = UnityInternalDrawTextureArgumentsType?.GetField("sourceRect");
     private static readonly FieldInfo MatField = UnityInternalDrawTextureArgumentsType?.GetField("mat");
+
     private static readonly FieldInfo BorderWidthsField =
         UnityInternalDrawTextureArgumentsType?.GetField("borderWidths");
+
     private static readonly FieldInfo CornerRadiusesField =
         UnityInternalDrawTextureArgumentsType?.GetField("cornerRadiuses");
+
     private static readonly FieldInfo SmoothCornersField =
         UnityInternalDrawTextureArgumentsType?.GetField("smoothCorners");
 

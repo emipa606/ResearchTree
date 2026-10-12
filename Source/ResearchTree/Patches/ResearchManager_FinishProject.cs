@@ -8,9 +8,9 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch(typeof(ResearchManager), nameof(ResearchManager.FinishProject))]
-public class ResearchManager_FinishProject
+public static class ResearchManager_FinishProject
 {
-    private static void Prefix(ResearchProjectDef proj, ref bool doCompletionDialog)
+    public static void Prefix(ResearchProjectDef proj, ref bool doCompletionDialog)
     {
         if (doCompletionDialog && !proj.IsAnomalyResearch())
         {
@@ -18,7 +18,7 @@ public class ResearchManager_FinishProject
         }
     }
 
-    private static void Postfix(ResearchProjectDef proj)
+    public static void Postfix(ResearchProjectDef proj)
     {
         if (proj == null || proj.IsAnomalyResearch())
         {

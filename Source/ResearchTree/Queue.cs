@@ -215,7 +215,7 @@ public class Queue : WorldComponent
 
         if (warning)
         {
-            Messages.Message("Fluffy.ResearchTree.CannotMoveMore".Translate(researchOrder.Last().Label), null,
+            Messages.Message("Fluffy.ResearchTree.CannotMoveMore".Translate(researchOrder[^1].Label), null,
                 MessageTypeDefOf.RejectInput);
         }
 

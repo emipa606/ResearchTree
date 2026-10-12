@@ -7,7 +7,7 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch]
-public class UINotIncluded_Button_Worker_OnRepaint
+public static class UINotIncluded_Button_Worker_OnRepaint
 {
     public static bool Prepare()
     {

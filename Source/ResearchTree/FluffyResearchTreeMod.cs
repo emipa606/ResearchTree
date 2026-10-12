@@ -16,8 +16,6 @@ internal class FluffyResearchTreeMod : Mod
 
     private static string currentVersion;
 
-    //public static Thread initializeWorker;
-
     /// <summary>
     ///     Constructor
     /// </summary>
@@ -44,11 +42,11 @@ internal class FluffyResearchTreeMod : Mod
     ///     The settings-window
     ///     For more info: https://rimworldwiki.com/wiki/Modding_Tutorials/ModSettings
     /// </summary>
-    /// <param name="rect"></param>
-    public override void DoSettingsWindowContents(Rect rect)
+    /// <param name="inRect"></param>
+    public override void DoSettingsWindowContents(Rect inRect)
     {
         var listing_Standard = new Listing_Standard();
-        listing_Standard.Begin(rect);
+        listing_Standard.Begin(inRect);
         listing_Standard.Gap();
         listing_Standard.Label("Fluffy.ResearchTree.LoadType".Translate());
 

@@ -6,7 +6,7 @@ using Verse;
 
 namespace FluffyResearchTree;
 
-public class Profiler
+public static class Profiler
 {
     [Conditional("DEBUG")]
     public static void Start(string label = null)

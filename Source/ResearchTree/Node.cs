@@ -38,19 +38,19 @@ public class Node
 
     private Vector2 _topLeft = Vector2.zero;
 
-    public List<Node> Descendants => OutNodes.Concat(OutNodes.SelectMany(n => n.Descendants)).ToList();
+    public List<Node> Descendants => [.. OutNodes, .. OutNodes.SelectMany(n => n.Descendants)];
 
     public List<Edge<Node, Node>> OutEdges { get; } = [];
 
-    public List<Node> OutNodes => OutEdges.Select(e => e.Out).ToList();
+    public List<Node> OutNodes => [.. OutEdges.Select(e => e.Out)];
 
     public List<Edge<Node, Node>> InEdges { get; } = [];
 
-    public List<Node> InNodes => InEdges.Select(e => e.In).ToList();
+    public List<Node> InNodes => [.. InEdges.Select(e => e.In)];
 
-    public List<Edge<Node, Node>> Edges => InEdges.Concat(OutEdges).ToList();
+    public List<Edge<Node, Node>> Edges => [.. InEdges, .. OutEdges];
 
-    public List<Node> Nodes => InNodes.Concat(OutNodes).ToList();
+    public List<Node> Nodes => [.. InNodes, .. OutNodes];
 
     protected Rect CostIconRect
     {

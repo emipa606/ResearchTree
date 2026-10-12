@@ -235,3 +235,11 @@ $RECYCLE.BIN/
 # Rimworld specific
 _PublisherPlus.xml
 lastrun.log
+
+# Continue
+.continue
+build_output.txt
+
+# SonarQube
+.sonarlint
+.sonarqube

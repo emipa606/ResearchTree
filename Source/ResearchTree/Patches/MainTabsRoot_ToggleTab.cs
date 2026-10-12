@@ -6,7 +6,7 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch(typeof(MainTabsRoot), nameof(MainTabsRoot.ToggleTab))]
-public class MainTabsRoot_ToggleTab
+public static class MainTabsRoot_ToggleTab
 {
     public static void Prefix(ref MainButtonDef newTab)
     {

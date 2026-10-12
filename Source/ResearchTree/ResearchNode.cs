@@ -16,9 +16,9 @@ public class ResearchNode : Node
 
     private static readonly Dictionary<ResearchProjectDef, List<ThingDef>> _missingFacilitiesCache = [];
 
-    private readonly int cacheOrder;
-
     public readonly ResearchProjectDef Research;
+
+    private readonly int cacheOrder;
     private readonly TipSignal tooltipSignal;
 
     private bool availableCache;
@@ -368,7 +368,6 @@ public class ResearchNode : Node
         if (!Assets.SemiRandomResearchLoaded)
         {
             stringBuilder.AppendLine();
-            // TODO: Add settings so that shortcut key tips can be hidden
             if (Queue.IsQueued(this))
             {
                 stringBuilder.AppendLine(
@@ -435,12 +434,9 @@ public class ResearchNode : Node
         value = [];
         foreach (var item in list)
         {
-            if (item.requiredResearchBuilding != null)
+            if (item.requiredResearchBuilding != null && !distinctBenches.Contains(item.requiredResearchBuilding))
             {
-                if (!distinctBenches.Contains(item.requiredResearchBuilding))
-                {
-                    value.Add(item.requiredResearchBuilding);
-                }
+                value.Add(item.requiredResearchBuilding);
             }
 
             if (item.requiredResearchFacilities.NullOrEmpty())
@@ -448,12 +444,10 @@ public class ResearchNode : Node
                 continue;
             }
 
-            foreach (var facility in item.requiredResearchFacilities)
+            foreach (var facility in item.requiredResearchFacilities.Where(f =>
+                         !availableBenches.Any(b => b.HasFacility(f))))
             {
-                if (!availableBenches.Any(b => b.HasFacility(facility)))
-                {
-                    value.Add(facility);
-                }
+                value.Add(facility);
             }
         }
 
@@ -504,7 +498,6 @@ public class ResearchNode : Node
         if (Event.current.type == EventType.Repaint)
         {
             // researches that are completed or could be started immediately, and that have the required building(s) available
-            //GUI.color = Mouse.IsOver(Rect) ? GenUI.MouseoverColor : Color;
             var color = mouseOver ? GenUI.MouseoverColor : Color;
 
             if (mouseOver || Highlighted)
@@ -520,7 +513,6 @@ public class ResearchNode : Node
             if (Available)
             {
                 var position = Rect.ContractedBy(3f);
-                //GUI.color = Assets.ColorAvailable[Research.techLevel];
                 color = Assets.ColorAvailable[Research.techLevel];
                 position.xMin += Research.ApparentPercent() * position.width;
                 FastGUI.DrawTextureFast(position, BaseContent.WhiteTex, color);
@@ -710,10 +702,6 @@ public class ResearchNode : Node
         return list.Distinct().ToList();
     }
 
-    // TODO: The above code for handling key events should be extracted into a public method,
-    //       so that the consistency of shortcut keys can be maintained.
-    //       However, left-clicking on a node will probably conflict with the original view.
-    //       We will try it out, but that’s it for now.
     public void HandleVanillaNodeClickEvent()
     {
         if (!Available)

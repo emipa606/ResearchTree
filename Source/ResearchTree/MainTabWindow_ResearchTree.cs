@@ -18,6 +18,10 @@ public class MainTabWindow_ResearchTree : MainTabWindow
 
     private readonly QuickSearchWidget _quickSearchWidget = new();
 
+    public bool ViewRectDirty = true;
+
+    public bool ViewRectInnerDirty = true;
+
     private Rect _baseViewRect;
 
     private Rect _baseViewRectInner;
@@ -32,10 +36,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
     private Vector2 _mousePosition = Vector2.zero;
 
     private Rect _viewRect;
-
-    public bool ViewRectDirty = true;
-
-    public bool ViewRectInnerDirty = true;
 
     public MainTabWindow_ResearchTree()
     {
@@ -133,7 +133,7 @@ public class MainTabWindow_ResearchTree : MainTabWindow
         {
             return _cachedVisibleResearchProjects ??=
             [
-                ..DefDatabase<ResearchProjectDef>.AllDefsListForReading
+                .. DefDatabase<ResearchProjectDef>.AllDefsListForReading
                     .Where(d => Find.Storyteller.difficulty.AllowedBy(d.hideWhen) ||
                                 Find.ResearchManager.IsCurrentProject(d))
             ];
@@ -434,7 +434,6 @@ public class MainTabWindow_ResearchTree : MainTabWindow
                 continue;
             }
 
-            //CenterOn(node);
             somethingHighlighted = false;
         }
 

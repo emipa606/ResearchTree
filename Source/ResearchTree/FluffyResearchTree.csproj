@@ -2,21 +2,27 @@
   <PropertyGroup>
     <OutputPath>..\..\1.6\Assemblies</OutputPath>
     <TargetFramework>net48</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>None</DebugType>
     <LangVersion>latest</LangVersion>
-    <FileVersion>1.6.8</FileVersion>
+    <FileVersion>1.6.9</FileVersion>
+    <AssemblyVersion>1.6</AssemblyVersion>
+    <Product>Research Tree (Continued)</Product>
+    <Copyright>© Fluffy 2026 - =======================================================================</Copyright>
+    <Nullable>warnings</Nullable>
   </PropertyGroup>
+  <Target Name="KillRimWorld" BeforeTargets="Clean;Build">
+    <Exec Command="tasklist /FI &quot;IMAGENAME eq RimWorld.exe&quot; | find /I &quot;RimWorld.exe&quot; &gt;nul &amp;&amp; taskkill /F /IM RimWorld.exe" IgnoreExitCode="true" />
+  </Target>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.6.4817-beta</Version>
+      <Version>*</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Lib.Harmony">
-      <Version>*</Version>
+      <Version>3.0.0-rc.2</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Mlie_Rimworld_VersionFromManifest" Version="*" />

@@ -6,7 +6,7 @@ using Verse;
 namespace FluffyResearchTree;
 
 [HarmonyPatch(typeof(MainTabWindow_Research), "ComputeUnlockedDefsThatHaveMissingMemes")]
-public class MainTabWindow_Research_ComputeUnlockedDefsThatHaveMissingMemes
+public static class MainTabWindow_Research_ComputeUnlockedDefsThatHaveMissingMemes
 {
     public static bool Prefix(ref List<(BuildableDef, List<string>)> __result)
     {
