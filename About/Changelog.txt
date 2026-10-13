@@ -1,5 +1,8 @@
 # Changelog for ResearchTree
 
+1.6.10 - Fix for enumeration removal issue
+
+
 1.6.9 - Code cleanup based on SonarQube report
 
 
